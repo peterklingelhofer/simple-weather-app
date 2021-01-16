@@ -1,0 +1,26 @@
+.app {
+  background: #203fee;
+  height: 90vh;
+  padding: 40px;
+  border-radius: 5px;
+}
+.zipCode {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  font-size: 18px;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
+  margin-bottom: 5px;
+  padding: 5px 10px;
+}
+.zipCode-list {
+  padding: 5px;
+  border-radius: 4px;
+  max-width: 400px;
+  background: #e8e8e8;
+}
+.whiteText {
+  color: #fff;
+}
