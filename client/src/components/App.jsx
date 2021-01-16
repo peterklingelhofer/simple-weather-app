@@ -8,13 +8,13 @@ function App() {
   const [userLocation, setUserLocation] = useState({});
   const [zipCodes, setZipCodes] = useState([
     // {
-    //   text: '22203',
+    //   zipCode: '22203',
     // },
     // {
-    //   text: '70119',
+    //   zipCode: '70119',
     // },
     // {
-    //   text: '90210',
+    //   zipCode: '90210',
     // },
   ]);
 
@@ -33,11 +33,15 @@ function App() {
       .get(`zipcode/${zip}`)
       .then((response) => {
         const { data } = response;
-        const { coord } = data;
+        const { coord, name, weather, main } = data;
+        const { temp } = main;
+        const currentConditions = weather[0].description;
         const { lat, lon } = coord;
         // get weather forecast with coordinates
         getWeatherByCoordinates(lat, lon);
         console.log(data);
+        const newZipCodes = [...zipCodes, { zip, name, currentConditions, temp }];
+        setZipCodes(newZipCodes);
       })
       .catch((err) => console.log(err));
   };
@@ -47,13 +51,12 @@ function App() {
     navigator.geolocation.getCurrentPosition((position) => {
       const { latitude, longitude } = position.coords;
       setUserLocation({ lat: latitude, lng: longitude });
-      // getWeatherByCoordinates(latitude, longitude);
     });
   }, []);
 
-  const addZipCode = (text) => {
-    getWeatherByZipCode(text);
-    const newZipCodes = [...zipCodes, { text }];
+  const addZipCode = (zip) => {
+    getWeatherByZipCode(zip);
+    const newZipCodes = [...zipCodes, { zip }];
     setZipCodes(newZipCodes);
   };
 
