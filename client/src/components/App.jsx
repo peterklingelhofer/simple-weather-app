@@ -7,27 +7,52 @@ import ZipCodeForm from './ZipCodeForm.jsx';
 function App() {
   const [userLocation, setUserLocation] = useState({});
   const [zipCodes, setZipCodes] = useState([
-    {
-      text: '22203',
-    },
-    {
-      text: '70119',
-    },
-    {
-      text: '90210',
-    },
+    // {
+    //   text: '22203',
+    // },
+    // {
+    //   text: '70119',
+    // },
+    // {
+    //   text: '90210',
+    // },
   ]);
+
+  const getWeatherByCoordinates = (lat, lng) => {
+    axios
+      .get(`coordinates/${lat}/${lng}`)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const getWeatherByZipCode = (zip) => {
+    // get current weather conditions with Zip Code
+    axios
+      .get(`zipcode/${zip}`)
+      .then((response) => {
+        const { data } = response;
+        const { coord } = data;
+        const { lat, lon } = coord;
+        // get weather forecast with coordinates
+        getWeatherByCoordinates(lat, lon);
+        console.log(data);
+      })
+      .catch((err) => console.log(err));
+  };
 
   // Request Location of User
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
       const { latitude, longitude } = position.coords;
-      console.log(latitude, longitude);
       setUserLocation({ lat: latitude, lng: longitude });
+      // getWeatherByCoordinates(latitude, longitude);
     });
   }, []);
 
   const addZipCode = (text) => {
+    getWeatherByZipCode(text);
     const newZipCodes = [...zipCodes, { text }];
     setZipCodes(newZipCodes);
   };

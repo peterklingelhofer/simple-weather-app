@@ -3,3 +3,4 @@ node_modules
 client/dist/bundle.js*
 .vscode/launch.json
 .env
+package-lock.json
