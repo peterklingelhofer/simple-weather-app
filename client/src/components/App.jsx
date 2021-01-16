@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import ZipCode from './ZipCode.jsx';
 import ZipCodeForm from './ZipCodeForm.jsx';
 
 function App() {
+  const [userLocation, setUserLocation] = useState({});
   const [zipCodes, setZipCodes] = useState([
     {
       text: '22203',
@@ -16,6 +17,15 @@ function App() {
       text: '90210',
     },
   ]);
+
+  // Request Location of User
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      const { latitude, longitude } = position.coords;
+      console.log(latitude, longitude);
+      setUserLocation({ lat: latitude, lng: longitude });
+    });
+  }, []);
 
   const addZipCode = (text) => {
     const newZipCodes = [...zipCodes, { text }];

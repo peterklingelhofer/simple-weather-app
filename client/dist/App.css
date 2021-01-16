@@ -17,9 +17,14 @@
 }
 .zipCode-list {
   padding: 5px;
-  border-radius: 4px;
+  border-radius: 5px;
   max-width: 400px;
   background: #e8e8e8;
+}
+.input {
+  padding: 5px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.15);
 }
 .whiteText {
   color: #fff;
