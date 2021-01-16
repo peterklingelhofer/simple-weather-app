@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
+// import Modal from 'react-modal';
+import ForecastModal from './ForecastModal.jsx';
 
 export default function ZipCode({ zipCode, index, removeZipCode }) {
-  const { zip, name, currentConditions, temp } = zipCode;
+  const { zip, name, currentConditions, temp, forecast } = zipCode;
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleModal = () => {
+    setIsOpen(!isOpen);
+  };
 
   // convert temp from Kelvin to Fahrenheit
-  const fahrenheit = (((+temp - 273.15) * 9) / 5 + 32).toFixed(2);
+  const temperature = (((+temp - 273.15) * 9) / 5 + 32).toFixed(2);
   return (
-    <div className="zipCode">
+    <div onClick={toggleModal} className="zipCode">
       <span role="img" aria-label="pin">
         📍
       </span>
@@ -14,10 +21,19 @@ export default function ZipCode({ zipCode, index, removeZipCode }) {
       <span role="img" aria-label="thermometer">
         🌡
       </span>
-      {fahrenheit}°F, {currentConditions}
+      {temperature}°F, {currentConditions}
       <div>
         <button onClick={() => removeZipCode(index)}>X</button>
       </div>
+      <ForecastModal
+        toggleModal={toggleModal}
+        zip={zip}
+        name={name}
+        currentConditions={currentConditions}
+        temperature={temperature}
+        forecast={forecast}
+        isOpen={isOpen}
+      />
     </div>
   );
 }

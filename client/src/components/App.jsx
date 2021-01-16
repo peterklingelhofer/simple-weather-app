@@ -6,29 +6,24 @@ import ZipCodeForm from './ZipCodeForm.jsx';
 
 function App() {
   const [userLocation, setUserLocation] = useState({});
-  const [zipCodes, setZipCodes] = useState([
-    // {
-    //   zipCode: '22203',
-    // },
-    // {
-    //   zipCode: '70119',
-    // },
-    // {
-    //   zipCode: '90210',
-    // },
-  ]);
+  const [zipCodes, setZipCodes] = useState([]);
 
-  const getWeatherByCoordinates = (lat, lng) => {
+  // Get weather forecast with coordinates
+  const getWeatherByCoordinates = (lat, lng, zip, newZipCodes) => {
     axios
       .get(`coordinates/${lat}/${lng}`)
       .then((response) => {
-        console.log(response);
+        const { data } = response;
+        const index = newZipCodes.findIndex((location) => location.zip === zip);
+        const updatedZipCodes = newZipCodes;
+        updatedZipCodes[index].forecast = data;
+        setZipCodes(updatedZipCodes);
       })
       .catch((err) => console.log(err));
   };
 
   const getWeatherByZipCode = (zip) => {
-    // get current weather conditions with Zip Code
+    // Get current weather conditions with Zip Code
     axios
       .get(`zipcode/${zip}`)
       .then((response) => {
@@ -37,10 +32,13 @@ function App() {
         const { temp } = main;
         const currentConditions = weather[0].description;
         const { lat, lon } = coord;
-        // get weather forecast with coordinates
-        getWeatherByCoordinates(lat, lon);
-        console.log(data);
-        const newZipCodes = [...zipCodes, { zip, name, currentConditions, temp }];
+
+        const newZipCodes = [
+          ...zipCodes,
+          { zip, name, currentConditions, temp },
+        ];
+        // Now that we have coordinates, we can request the forecast
+        getWeatherByCoordinates(lat, lon, zip, newZipCodes);
         setZipCodes(newZipCodes);
       })
       .catch((err) => console.log(err));
@@ -54,12 +52,14 @@ function App() {
     });
   }, []);
 
+  // Add a new zip code location to the list
   const addZipCode = (zip) => {
     getWeatherByZipCode(zip);
     const newZipCodes = [...zipCodes, { zip }];
     setZipCodes(newZipCodes);
   };
 
+  // Remove a zip code location from the list
   const removeZipCode = (index) => {
     const newZipCodes = [...zipCodes];
     newZipCodes.splice(index, 1);

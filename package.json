@@ -33,6 +33,7 @@
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-icons": "^3.10.0",
+    "react-modal": "^3.12.1",
     "react-scripts": "^4.0.1",
     "react-table": "^6.8.6"
   }
