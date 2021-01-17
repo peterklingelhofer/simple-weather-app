@@ -5,7 +5,7 @@ const DIST_DIR = path.join(__dirname, '/client/dist');
 const IS_PROD = process.env.NODE_ENV === 'production';
 
 module.exports = {
-  entry: `${SRC_DIR}/index.jsx`,
+  entry: ['@babel/polyfill', `${SRC_DIR}/index.jsx`],
   output: {
     filename: 'bundle.js',
     path: DIST_DIR,
