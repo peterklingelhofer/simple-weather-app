@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+
 import ZipCode from './ZipCode.jsx';
 import ZipCodeForm from './ZipCodeForm.jsx';
 
@@ -68,23 +69,19 @@ function App() {
     setZipCodes(newZipCodes);
     axios
       .post(`location/${zip}`)
-      .then((response) => {
-        console.log(response);
-      })
+      .then(() => {})
       .catch((err) => console.log(err));
   };
 
   // Remove a zip code location from the list
-  const removeZipCode = (index) => {
+  const removeZipCode = (zip) => {
     const newZipCodes = [...zipCodes];
-    const { zip } = newZipCodes.splice(index, 1)[0];
+    const index = newZipCodes.findIndex((location) => location.zip === zip);
     newZipCodes.splice(index, 1);
     setZipCodes(newZipCodes);
     axios
       .delete(`location/${zip}`)
-      .then((response) => {
-        console.log(response);
-      })
+      .then(() => {})
       .catch((err) => console.log(err));
   };
 
