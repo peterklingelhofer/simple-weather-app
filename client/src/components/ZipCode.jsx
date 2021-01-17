@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import Modal from 'react-modal';
+import { Button } from 'react-bootstrap';
 import ForecastModal from './ForecastModal.jsx';
 
 export default function ZipCode({ zipCode, index, removeZipCode }) {
@@ -23,7 +23,14 @@ export default function ZipCode({ zipCode, index, removeZipCode }) {
       </span>
       {temperature}°F, {currentConditions}
       <div>
-        <button onClick={() => removeZipCode(index)}>X</button>
+        <Button
+          onClick={() => {
+            removeZipCode(zipCode);
+            toggleModal();
+          }}
+        >
+          X
+        </Button>
       </div>
       <ForecastModal
         toggleModal={toggleModal}
