@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import Modal from 'react-modal';
 import { Button } from 'react-bootstrap';
@@ -11,7 +12,9 @@ export default function ForecastModal({
   toggleModal,
   isOpen,
 }) {
-  console.log(forecast);
+  if (!forecast) {
+    return <div />;
+  }
   return (
     <Modal
       isOpen={isOpen}
@@ -31,8 +34,6 @@ export default function ForecastModal({
         </span>
         {temperature}°F, {currentConditions}
       </h2>
-      {/* <div>{JSON.stringify(forecast)}</div> */}
-      {/* <div>{JSON.stringify(forecast)}</div> */}
       <div>
         <div>
           <table>
@@ -50,11 +51,13 @@ export default function ForecastModal({
               </tr>
             </thead>
             <tbody>
-              {forecast.hourly.map((row) => {
+              {forecast.hourly.map((row, i) => {
                 return (
-                  <tr>
+                  <tr key={i}>
                     <td>{row.dt}</td>
-                    <td>{(((+row.temp - 273.15) * 9) / 5 + 32).toFixed(2)}°F</td>
+                    <td>
+                      {(((+row.temp - 273.15) * 9) / 5 + 32).toFixed(2)}°F
+                    </td>
                     <td>{row.humidity}%</td>
                     <td>{row.pressure} atm</td>
                     <td>{row.clouds} %</td>
