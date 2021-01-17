@@ -1,10 +1,15 @@
 const axios = require('axios');
 const { app } = require('./app');
-
-const PORT = 8080;
-const db = require('./db');
 require('dotenv').config();
 
+const PORT = 8080;
+const { getItems, addItem, removeItem } = require('./db/index.js');
+
+app.listen(PORT, () => {
+  console.log(`Listening on :${PORT} 🚀`);
+});
+
+// Open Weather Map Request for Current Conditions with Zip Code
 app.get('/zipcode/:zip', (req, res) => {
   const { zip } = req.params;
   axios
@@ -19,6 +24,7 @@ app.get('/zipcode/:zip', (req, res) => {
     });
 });
 
+// Open Weather Map Request for Forecast with Coordinates
 app.get('/coordinates/:lat/:lng', (req, res) => {
   const { lat, lng } = req.params;
   axios
@@ -33,6 +39,39 @@ app.get('/coordinates/:lat/:lng', (req, res) => {
     });
 });
 
-app.listen(PORT, () => {
-  console.log(`Listening on :${PORT} 🚀`);
+// Retrieve items stored in database
+app.get('/location/', function (req, res) {
+  getItems()
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+});
+
+// Storage a new zip code in the database
+app.post('/location/:zip', function (req, res) {
+  const { zip } = req.params;
+  addItem(zip)
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+});
+
+// Delete an item stored in database
+app.delete('/location/:zip', function (req, res) {
+  const { zip } = req.params;
+  removeItem(zip)
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
 });
