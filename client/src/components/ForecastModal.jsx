@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import Modal from 'react-modal';
 import { Button } from 'react-bootstrap';
@@ -22,7 +21,9 @@ export default function ForecastModal({
       contentLabel="Forecast Modal"
       ariaHideApp={false}
     >
-      <Button onClick={toggleModal}>Close</Button>
+      <Button className="modalButton" onClick={toggleModal}>
+        Close
+      </Button>
       <h2>
         Forecast for{' '}
         <span role="img" aria-label="pin">
@@ -36,7 +37,7 @@ export default function ForecastModal({
       </h2>
       <div>
         <div>
-          <table>
+          <table className="table">
             <thead>
               <tr>
                 <th>Datetime</th>
@@ -51,20 +52,28 @@ export default function ForecastModal({
               </tr>
             </thead>
             <tbody>
-              {forecast.hourly.map((row, i) => {
+              {forecast.hourly.map((row) => {
+                const {
+                  dt,
+                  temp,
+                  humidity,
+                  pressure,
+                  clouds,
+                  wind_speed,
+                  wind_deg,
+                  weather,
+                } = row;
                 return (
-                  <tr key={i}>
-                    <td>{row.dt}</td>
-                    <td>
-                      {(((+row.temp - 273.15) * 9) / 5 + 32).toFixed(2)}°F
-                    </td>
-                    <td>{row.humidity}%</td>
-                    <td>{row.pressure} atm</td>
-                    <td>{row.clouds} %</td>
-                    <td>{row.wind_speed} m/s</td>
-                    <td>{row.wind_deg}°</td>
-                    <td>{row.weather[0].main}</td>
-                    <td>{row.weather[0].description}</td>
+                  <tr key={dt.toString()}>
+                    <td>{dt}</td>
+                    <td>{(((+temp - 273.15) * 9) / 5 + 32).toFixed(2)}°F</td>
+                    <td>{humidity}%</td>
+                    <td>{pressure} atm</td>
+                    <td>{clouds} %</td>
+                    <td>{wind_speed} m/s</td>
+                    <td>{wind_deg}°</td>
+                    <td>{weather[0].main}</td>
+                    <td>{weather[0].description}</td>
                   </tr>
                 );
               })}

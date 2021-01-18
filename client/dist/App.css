@@ -13,11 +13,15 @@
   border-radius: 5px;
   margin-bottom: 5px;
   padding: 5px 10px;
+  transition: all 0.2s ease-in-out;
+}
+.zipCode:hover {
+  transform: scale(1.01);
 }
 .zipCode-list {
   padding: 5px;
   border-radius: 5px;
-  max-width: 400px;
+  max-width: 500px;
   background: #e8e8e8;
 }
 .input {
@@ -28,7 +32,9 @@
 .whiteText {
   color: #fff;
 }
-
+.modalButton{
+  float: right;
+}
 .container {
   position: absolute;
   width: 100%;
@@ -37,7 +43,6 @@
 }
 table {
   width: 100%;
-  border-collapse: collapse;
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
