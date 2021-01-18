@@ -13,34 +13,38 @@ export default function ZipCode({ zipCode, index, removeZipCode }) {
   // convert temp from Kelvin to Fahrenheit
   const temperature = (((+temp - 273.15) * 9) / 5 + 32).toFixed(2);
   return (
-    <div onClick={toggleModal} className="zipCode">
-      <span role="img" aria-label="pin">
-        📍
-      </span>
-      {zip}, {name}{' '}
-      <span role="img" aria-label="thermometer">
-        🌡
-      </span>
-      {temperature}°F, {currentConditions}
+    <div className="zipCode">
+      <div onClick={toggleModal}>
+        <span role="img" aria-label="pin">
+          📍
+        </span>
+        {zip}, {name}{' '}
+        <span role="img" aria-label="thermometer">
+          🌡
+        </span>
+        {temperature}°F, {currentConditions}
+      </div>
+      <div onClick={toggleModal}>
+        <ForecastModal
+          toggleModal={toggleModal}
+          zip={zip}
+          name={name}
+          currentConditions={currentConditions}
+          temperature={temperature}
+          forecast={forecast}
+          isOpen={isOpen}
+        />
+      </div>
       <div>
         <Button
           onClick={() => {
-            removeZipCode(zipCode);
-            toggleModal();
+            removeZipCode(zip);
+            setIsOpen(false);
           }}
         >
           X
         </Button>
       </div>
-      <ForecastModal
-        toggleModal={toggleModal}
-        zip={zip}
-        name={name}
-        currentConditions={currentConditions}
-        temperature={temperature}
-        forecast={forecast}
-        isOpen={isOpen}
-      />
     </div>
   );
 }

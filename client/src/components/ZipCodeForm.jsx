@@ -14,7 +14,7 @@ export default function ZipCodeForm({ addZipCode }) {
     <form onSubmit={handleSubmit}>
       <input
         type="text"
-        className="input"
+        className="input formControl"
         placeholder="Enter zip code"
         value={value}
         onChange={(e) => setValue(e.target.value)}
