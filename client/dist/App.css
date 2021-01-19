@@ -3,6 +3,11 @@
   height: 100vh;
   padding: 40px;
 }
+.zipCodeSubmit {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 5px;
+}
 .zipCode {
   display: flex;
   justify-content: space-between;
@@ -32,7 +37,7 @@
 .whiteText {
   color: #fff;
 }
-.modalButton{
+.modalButton {
   float: right;
 }
 .container {
