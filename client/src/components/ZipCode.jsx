@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import ForecastModal from './ForecastModal.jsx';
 
-export default function ZipCode({ zipCode, index, removeZipCode }) {
+export default function ZipCode({ zipCode, removeZipCode }) {
   const { zip, name, currentConditions, temp, forecast } = zipCode;
   const [isOpen, setIsOpen] = useState(false);
 
@@ -14,7 +14,7 @@ export default function ZipCode({ zipCode, index, removeZipCode }) {
   const temperature = (((+temp - 273.15) * 9) / 5 + 32).toFixed(2);
   return (
     <div className="zipCode">
-      <div onClick={toggleModal}>
+      <div className="clickable" onClick={toggleModal}>
         <span role="img" aria-label="pin">
           📍
         </span>
@@ -35,7 +35,6 @@ export default function ZipCode({ zipCode, index, removeZipCode }) {
           isOpen={isOpen}
         />
       </div>
-      <div onClick={toggleModal}> </div>
       <div>
         <Button
           onClick={() => {
