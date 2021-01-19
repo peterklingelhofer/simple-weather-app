@@ -25,7 +25,7 @@ export default function ZipCodeForm({ addZipCode }) {
           onChange={(e) => setValue(e.target.value)}
         />
       </form>
-      <Button onClick={handleSubmit}>Submit</Button>
+      <Button onClick={handleSubmit}>Add</Button>
     </div>
   );
 }

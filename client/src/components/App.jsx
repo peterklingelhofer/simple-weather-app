@@ -9,14 +9,7 @@ function App() {
   const storedZipCodes = [];
 
   // Get weather forecast with coordinates
-  async function getWeatherByCoordinates(
-    lat,
-    lng,
-    zip,
-    newZipCodes,
-    newZipCode,
-    length
-  ) {
+  const getWeatherByCoordinates = (lat, lng, zip, newZipCodes, newZipCode, length) => {
     axios
       .get(`coordinates/${lat}/${lng}`)
       .then((response) => {
@@ -40,9 +33,9 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  async function getWeatherByZipCode(zip, length) {
+  const getWeatherByZipCode = (zip, length) => {
     // Get current weather conditions with Zip Code
-    await axios
+    axios
       .get(`zipcode/${zip}`)
       .then((response) => {
         const { data } = response;
