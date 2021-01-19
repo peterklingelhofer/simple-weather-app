@@ -40,7 +40,7 @@ app.get('/coordinates/:lat/:lng', (req, res) => {
 });
 
 // Retrieve items stored in database
-app.get('/location/', function (req, res) {
+app.get('/location/', (req, res) => {
   getItems()
     .then((data) => {
       res.send(data);
@@ -51,7 +51,7 @@ app.get('/location/', function (req, res) {
 });
 
 // Storage a new zip code in the database
-app.post('/location/:zip', function (req, res) {
+app.post('/location/:zip', (req, res) => {
   const { zip } = req.params;
   addItem(zip)
     .then((data) => {
@@ -64,7 +64,7 @@ app.post('/location/:zip', function (req, res) {
 });
 
 // Delete an item stored in database
-app.delete('/location/:zip', function (req, res) {
+app.delete('/location/:zip', (req, res) => {
   const { zip } = req.params;
   removeItem(zip)
     .then((data) => {
