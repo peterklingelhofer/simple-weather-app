@@ -25,7 +25,7 @@ export default function ForecastModal({
         Close
       </Button>
       <h2>
-        Forecast for{' '}
+        Hourly Forecast for{' '}
         <span role="img" aria-label="pin">
           📍
         </span>
@@ -65,7 +65,7 @@ export default function ForecastModal({
                 } = row;
                 return (
                   <tr key={dt.toString()}>
-                    <td>{dt}</td>
+                    <td>{(new Date(dt * 1000)).toString()}</td>
                     <td>{(((+temp - 273.15) * 9) / 5 + 32).toFixed(2)}°F</td>
                     <td>{humidity}%</td>
                     <td>{pressure} atm</td>
