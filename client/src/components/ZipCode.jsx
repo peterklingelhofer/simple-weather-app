@@ -35,7 +35,7 @@ export default function ZipCode({ zipCode, index, removeZipCode }) {
           isOpen={isOpen}
         />
       </div>
-      <div onClick={toggleModal}>     </div>
+      <div onClick={toggleModal}> </div>
       <div>
         <Button
           onClick={() => {
