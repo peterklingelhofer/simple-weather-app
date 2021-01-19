@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-
 import ZipCode from './ZipCode.jsx';
 import ZipCodeForm from './ZipCodeForm.jsx';
 
@@ -64,13 +63,15 @@ function App() {
 
   // Add a new zip code location to the list
   const addZipCode = (zip) => {
-    getWeatherByZipCode(zip);
-    const newZipCodes = [...zipCodes, { zip }];
-    setZipCodes(newZipCodes);
-    axios
-      .post(`location/${zip}`)
-      .then(() => {})
-      .catch((err) => console.log(err));
+    if (zipCodes.findIndex((location) => location.zip === zip) < 0) {
+      getWeatherByZipCode(zip);
+      const newZipCodes = [...zipCodes, { zip }];
+      setZipCodes(newZipCodes);
+      axios
+        .post(`location/${zip}`)
+        .then(() => {})
+        .catch((err) => console.log(err));
+    }
   };
 
   // Remove a zip code location from the list
@@ -111,6 +112,7 @@ function App() {
         Weather Tracker
       </h1>
       <div className="zipCode-list">
+        <ZipCodeForm addZipCode={addZipCode} />
         {zipCodes.map((zipCode, index) => (
           <ZipCode
             key={index}
@@ -119,7 +121,6 @@ function App() {
             removeZipCode={removeZipCode}
           />
         ))}
-        <ZipCodeForm addZipCode={addZipCode} />
       </div>
     </div>
   );
