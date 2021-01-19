@@ -3,6 +3,9 @@
   height: 100vh;
   padding: 40px;
 }
+.clickable {
+  cursor: pointer;
+}
 .zipCodeSubmit {
   display: flex;
   justify-content: space-between;
@@ -26,7 +29,7 @@
 .zipCode-list {
   padding: 5px;
   border-radius: 5px;
-  max-width: 500px;
+  max-width: 600px;
   background: #e8e8e8;
 }
 .input {
