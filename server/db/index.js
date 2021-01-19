@@ -22,7 +22,7 @@ connection.connect((err) => {
 
 const getItems = () => {
   return new Promise((resolve, reject) => {
-    connection.query('select * from items', function (error, result) {
+    connection.query('select * from items', (error, result) => {
       if (error) {
         reject(error);
       } else {
@@ -41,14 +41,13 @@ const addItem = (zip) => {
         } else {
           connection.query(
             `insert into items (zip) values (${zip})`,
-            function (error, result) {
+            (error, res) => {
               if (error) {
                 reject(error);
               } else {
-                console.log(result);
-                resolve(result);
+                resolve(res);
               }
-            }
+            },
           );
         }
       })
@@ -60,7 +59,7 @@ const addItem = (zip) => {
 
 const removeItem = (zip) => {
   return new Promise((resolve, reject) => {
-    connection.query(`delete from items where zip = ${zip}`, function (error, result) {
+    connection.query(`delete from items where zip = ${zip}`, (error, result) => {
       if (error) {
         reject(error);
       } else {
