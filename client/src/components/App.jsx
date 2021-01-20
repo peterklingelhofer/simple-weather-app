@@ -14,11 +14,9 @@ function App() {
       .get(`coordinates/${lat}/${lng}`)
       .then((response) => {
         const { data } = response;
-        let index;
-        let updatedZipCodes;
         if (length === undefined) {
-          index = newZipCodes.findIndex((location) => location.zip === zip);
-          updatedZipCodes = newZipCodes;
+          const index = newZipCodes.findIndex((location) => location.zip === zip);
+          const updatedZipCodes = newZipCodes;
           updatedZipCodes[index].forecast = data;
           setZipCodes(updatedZipCodes);
         } else {
@@ -52,7 +50,7 @@ function App() {
         getWeatherByCoordinates(lat, lon, zip, newZipCodes, newZipCode, length);
       })
       .catch((err) => console.log(err));
-  }
+  };
 
   // Add a new zip code location to the list
   const addZipCode = (zip) => {
@@ -62,7 +60,6 @@ function App() {
       setZipCodes(newZipCodes);
       axios
         .post(`location/${zip}`)
-        .then(() => {})
         .catch((err) => console.log(err));
     }
   };
@@ -75,7 +72,6 @@ function App() {
     setZipCodes(newZipCodes);
     axios
       .delete(`location/${zip}`)
-      .then(() => {})
       .catch((err) => console.log(err));
   };
 
