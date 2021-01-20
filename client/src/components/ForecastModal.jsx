@@ -25,11 +25,11 @@ export default function ForecastModal({
         Close
       </Button>
       <h2>
-        Hourly Forecast for{' '}
+        Hourly Forecast for&nbsp;
         <span role="img" aria-label="pin">
           📍
         </span>
-        {zip}, {name}{' '}
+        {zip}, {name}&nbsp;
         <span role="img" aria-label="thermometer">
           🌡
         </span>
@@ -59,8 +59,8 @@ export default function ForecastModal({
                   humidity,
                   pressure,
                   clouds,
-                  wind_speed,
-                  wind_deg,
+                  wind_speed: windSpeed,
+                  wind_deg: windDegree,
                   weather,
                 } = row;
                 return (
@@ -70,8 +70,8 @@ export default function ForecastModal({
                     <td>{humidity}%</td>
                     <td>{pressure} atm</td>
                     <td>{clouds} %</td>
-                    <td>{wind_speed} m/s</td>
-                    <td>{wind_deg}°</td>
+                    <td>{windSpeed} m/s</td>
+                    <td>{windDegree}°</td>
                     <td>{weather[0].main}</td>
                     <td>{weather[0].description}</td>
                   </tr>
