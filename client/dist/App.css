@@ -37,6 +37,15 @@
   border-radius: 5px;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.15);
 }
+.redText {
+  color: #C21818;
+}
+.center {
+  margin: auto;
+}
+.greenText {
+  color: #5E9E9D;
+}
 .whiteText {
   color: #fff;
 }
