@@ -18,7 +18,7 @@ export default function ZipCode({ zipCode, removeZipCode }) {
         <span role="img" aria-label="pin">
           📍
         </span>
-        {zip}, {name}{' '}
+        {zip}, {name}&nbsp;
         <span role="img" aria-label="thermometer">
           🌡
         </span>

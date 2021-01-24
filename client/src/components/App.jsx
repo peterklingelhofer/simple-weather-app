@@ -97,7 +97,7 @@ function App() {
       <h1 className="whiteText">
         <span role="img" aria-label="crystal ball">
           🔮
-        </span>{' '}
+        </span>&nbsp;
         Weather Tracker
       </h1>
       <div className="zipCode-list">
