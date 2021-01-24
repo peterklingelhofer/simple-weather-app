@@ -1,4 +1,5 @@
 const mysql = require('mysql');
+const util = require('util');
 require('dotenv').config();
 
 const connection = mysql.createConnection({
@@ -16,54 +17,32 @@ connection.connect((err) => {
   }
 });
 
-const getItems = () => {
-  return new Promise((resolve, reject) => {
-    connection.query('select * from items', (error, result) => {
-      if (error) {
-        reject(error);
-      } else {
-        resolve(result);
-      }
-    });
-  });
-};
+const query = util.promisify(connection.query).bind(connection);
 
-const addItem = (zip) => {
-  return new Promise((resolve, reject) => {
-    getItems()
-      .then((result) => {
-        if (result.some((item) => item.zip === zip)) {
-          reject('Location already stored in mySQL database');
-        } else {
-          connection.query(
-            `insert into items (zip) values (${zip})`,
-            (error, res) => {
-              if (error) {
-                reject(error);
-              } else {
-                resolve(res);
-              }
-            },
-          );
-        }
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  });
-};
+async function getItems() {
+  try {
+    const items = await query('select * from items');
+    return items;
+  } catch (error) {
+    throw error;
+  }
+}
 
-const removeItem = (zip) => {
-  return new Promise((resolve, reject) => {
-    connection.query(`delete from items where zip = ${zip}`, (error, result) => {
-      if (error) {
-        reject(error);
-      } else {
-        resolve(result);
-      }
-    });
-  });
-};
+async function addItem(zip) {
+  try {
+    await query(`insert into items (zip) values (${zip})`);
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function removeItem(zip) {
+  try {
+    await query(`delete from items where zip = ${zip}`);
+  } catch (error) {
+    throw error;
+  }
+}
 
 module.exports = {
   getItems,
