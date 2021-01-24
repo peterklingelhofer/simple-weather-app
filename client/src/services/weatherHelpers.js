@@ -12,25 +12,25 @@ export async function getWeatherByCoordinates(
   storedZipCodes,
   length,
 ) {
-  await axios
-    .get(`coordinates/${lat}/${lng}`)
-    .then((response) => {
-      const { data } = response;
-      if (length === undefined) {
-        const index = newZipCodes.findIndex((location) => location.zip === zip);
-        const updatedZipCodes = newZipCodes;
-        updatedZipCodes[index].forecast = data;
-        setZipCodes(updatedZipCodes);
-      } else {
-        newZipCode.forecast = data;
-        storedZipCodes.push(newZipCode);
-        // Set state after all forecasts from database-stored locations have been retrieved
-        if (storedZipCodes.length === length) {
-          setZipCodes(storedZipCodes);
-        }
+  try {
+    const response = await axios.get(`coordinates/${lat}/${lng}`);
+    const { data } = response;
+    if (length === undefined) {
+      const index = newZipCodes.findIndex((location) => location.zip === zip);
+      const updatedZipCodes = newZipCodes;
+      updatedZipCodes[index].forecast = data;
+      setZipCodes(updatedZipCodes);
+    } else {
+      newZipCode.forecast = data;
+      storedZipCodes.push(newZipCode);
+      // Set state after all forecasts from database-stored locations have been retrieved
+      if (storedZipCodes.length === length) {
+        setZipCodes(storedZipCodes);
       }
-    })
-    .catch((err) => console.log(err));
+    }
+  } catch (error) {
+    alert(error);
+  }
 }
 
 export async function getWeatherByZipCode(
@@ -41,30 +41,30 @@ export async function getWeatherByZipCode(
   length,
 ) {
   // Get current weather conditions with Zip Code
-  await axios
-    .get(`zipcode/${zip}`)
-    .then((response) => {
-      const { data } = response;
-      const { coord, name, weather, main } = data;
-      const { temp } = main;
-      const currentConditions = weather[0].description;
-      const { lat, lon } = coord;
-      const newZipCodes = [...zipCodes, { zip, name, currentConditions, temp }];
-      const newZipCode = { zip, name, currentConditions, temp };
-      // Now that we have coordinates, we can request the forecast
-      getWeatherByCoordinates(
-        lat,
-        lon,
-        zip,
-        newZipCodes,
-        newZipCode,
-        zipCodes,
-        setZipCodes,
-        storedZipCodes,
-        length,
-      );
-    })
-    .catch((err) => console.log(err));
+  try {
+    const response = await axios.get(`zipcode/${zip}`);
+    const { data } = response;
+    const { coord, name, weather, main } = data;
+    const { temp } = main;
+    const currentConditions = weather[0].description;
+    const { lat, lon } = coord;
+    const newZipCodes = [...zipCodes, { zip, name, currentConditions, temp }];
+    const newZipCode = { zip, name, currentConditions, temp };
+    // Now that we have coordinates, we can request the forecast
+    getWeatherByCoordinates(
+      lat,
+      lon,
+      zip,
+      newZipCodes,
+      newZipCode,
+      zipCodes,
+      setZipCodes,
+      storedZipCodes,
+      length,
+    );
+  } catch (error) {
+    alert(error);
+  }
 }
 
 // Add a new zip code location to the list
@@ -79,7 +79,11 @@ export async function addZipCode(
     getWeatherByZipCode(zip, zipCodes, setZipCodes, storedZipCodes, undefined);
     const newZipCodes = [...zipCodes, { zip }];
     setZipCodes(newZipCodes);
-    await axios.post(`location/${zip}`).catch((err) => console.log(err));
+    try {
+      await axios.post(`location/${zip}`);
+    } catch (error) {
+      alert(error);
+    }
   }
 }
 
@@ -89,5 +93,9 @@ export async function removeZipCode(zip, zipCodes, setZipCodes) {
   const index = newZipCodes.findIndex((location) => location.zip === zip);
   newZipCodes.splice(index, 1);
   setZipCodes(newZipCodes);
-  await axios.delete(`location/${zip}`).catch((err) => console.log(err));
+  try {
+    await axios.delete(`location/${zip}`);
+  } catch (error) {
+    alert(error);
+  }
 }
