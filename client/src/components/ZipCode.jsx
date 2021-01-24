@@ -1,19 +1,27 @@
 import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import ForecastModal from './ForecastModal.jsx';
+import { kelvinToFahrenheit } from '../services/conversionHelpers';
 
-export default function ZipCode({ zipCode, removeZipCode, zipCodes, setZipCodes }) {
+export default function ZipCode({
+  zipCode,
+  removeZipCode,
+  zipCodes,
+  setZipCodes,
+}) {
   const { zip, name, currentConditions, temp, forecast } = zipCode;
-  const [isOpen, setIsOpen] = useState(false);
+  if (!temp) { 
+    return (<div />)
+  }
+    const [isOpen, setIsOpen] = useState(false);
 
-  const toggleModal = () => {
-    setIsOpen(!isOpen);
-  };
+    const toggleModal = () => {
+      setIsOpen(!isOpen);
+    };
 
-  // convert temp from Kelvin to Fahrenheit
-  const temperature = (((+temp - 273.15) * 9) / 5 + 32).toFixed(2);
-  return (
-    <div className="zipCode">
+    const temperature = kelvinToFahrenheit(temp);
+
+    const zipCodeHeader = (
       <div className="clickable" onClick={toggleModal}>
         <span role="img" aria-label="pin">
           📍
@@ -24,27 +32,32 @@ export default function ZipCode({ zipCode, removeZipCode, zipCodes, setZipCodes 
         </span>
         {temperature}°F, {currentConditions}
       </div>
-      <div onClick={toggleModal}>
-        <ForecastModal
-          toggleModal={toggleModal}
-          zip={zip}
-          name={name}
-          currentConditions={currentConditions}
-          temperature={temperature}
-          forecast={forecast}
-          isOpen={isOpen}
-        />
+    );
+
+    return (
+      <div className="zipCode">
+        {zipCodeHeader}
+        <div onClick={toggleModal}>
+          <ForecastModal
+            toggleModal={toggleModal}
+            zip={zip}
+            name={name}
+            currentConditions={currentConditions}
+            temperature={temperature}
+            forecast={forecast}
+            isOpen={isOpen}
+          />
+        </div>
+        <div>
+          <Button
+            onClick={() => {
+              removeZipCode(zip, zipCodes, setZipCodes);
+              setIsOpen(false);
+            }}
+          >
+            X
+          </Button>
+        </div>
       </div>
-      <div>
-        <Button
-          onClick={() => {
-            removeZipCode(zip, zipCodes, setZipCodes);
-            setIsOpen(false);
-          }}
-        >
-          X
-        </Button>
-      </div>
-    </div>
-  );
-}
+    );
+};

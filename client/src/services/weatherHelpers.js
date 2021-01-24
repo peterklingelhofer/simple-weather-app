@@ -7,7 +7,10 @@ export async function getWeatherByCoordinates(
   zip,
   newZipCodes,
   newZipCode,
-  zipCodes, setZipCodes, storedZipCodes, length
+  zipCodes,
+  setZipCodes,
+  storedZipCodes,
+  length,
 ) {
   await axios
     .get(`coordinates/${lat}/${lng}`)
@@ -30,8 +33,13 @@ export async function getWeatherByCoordinates(
     .catch((err) => console.log(err));
 }
 
-export async function getWeatherByZipCode(zip, zipCodes, setZipCodes, storedZipCodes, length) {
-  debugger;
+export async function getWeatherByZipCode(
+  zip,
+  zipCodes,
+  setZipCodes,
+  storedZipCodes,
+  length,
+) {
   // Get current weather conditions with Zip Code
   await axios
     .get(`zipcode/${zip}`)
@@ -44,13 +52,29 @@ export async function getWeatherByZipCode(zip, zipCodes, setZipCodes, storedZipC
       const newZipCodes = [...zipCodes, { zip, name, currentConditions, temp }];
       const newZipCode = { zip, name, currentConditions, temp };
       // Now that we have coordinates, we can request the forecast
-      getWeatherByCoordinates(lat, lon, zip, newZipCodes, newZipCode, zipCodes, setZipCodes, storedZipCodes, length);
+      getWeatherByCoordinates(
+        lat,
+        lon,
+        zip,
+        newZipCodes,
+        newZipCode,
+        zipCodes,
+        setZipCodes,
+        storedZipCodes,
+        length,
+      );
     })
     .catch((err) => console.log(err));
 }
 
 // Add a new zip code location to the list
-export async function addZipCode(zip, zipCodes, setZipCodes, storedZipCodes, length) {
+export async function addZipCode(
+  zip,
+  zipCodes,
+  setZipCodes,
+  storedZipCodes,
+  length,
+) {
   if (zipCodes.findIndex((location) => location.zip === zip) < 0) {
     getWeatherByZipCode(zip, zipCodes, setZipCodes, storedZipCodes, undefined);
     const newZipCodes = [...zipCodes, { zip }];
