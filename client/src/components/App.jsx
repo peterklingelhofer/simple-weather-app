@@ -1,17 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
-  getWeatherByCoordinates,
   getWeatherByZipCode,
   addZipCode,
   removeZipCode,
-} from '../services/helpers';
+} from '../services/weatherHelpers';
 import ZipCode from './ZipCode.jsx';
 import ZipCodeForm from './ZipCodeForm.jsx';
 
 function App() {
   const [zipCodes, setZipCodes] = useState([]);
   const storedZipCodes = [];
+
+  const zipCodesMapped = zipCodes.map((zipCode, index) => (
+    <ZipCode
+      key={index}
+      index={index}
+      zipCode={zipCode}
+      removeZipCode={removeZipCode}
+      zipCodes={zipCodes}
+      setZipCodes={setZipCodes}
+      storedZipCodes={storedZipCodes}
+    />
+  ));
 
   // Get locations stored from previous session
   useEffect(() => {
@@ -51,17 +62,7 @@ function App() {
           setZipCodes={setZipCodes}
           storedZipCodes={storedZipCodes}
         />
-        {zipCodes.map((zipCode, index) => (
-          <ZipCode
-            key={index}
-            index={index}
-            zipCode={zipCode}
-            removeZipCode={removeZipCode}
-            zipCodes={zipCodes}
-            setZipCodes={setZipCodes}
-            storedZipCodes={storedZipCodes}
-          />
-        ))}
+        {zipCodesMapped}
       </div>
     </div>
   );

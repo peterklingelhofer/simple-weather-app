@@ -1,6 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
 import { Button } from 'react-bootstrap';
+import { kelvinToFahrenheit } from '../services/conversionHelpers';
 
 export default function ForecastModal({
   zip,
@@ -11,6 +12,67 @@ export default function ForecastModal({
   toggleModal,
   isOpen,
 }) {
+  const forecastHeader = (
+    <h2>
+      Hourly Forecast for&nbsp;
+      <span role="img" aria-label="pin">
+        📍
+      </span>
+      {zip}, {name}&nbsp;
+      <span role="img" aria-label="thermometer">
+        🌡
+      </span>
+      {temperature}°F, {currentConditions}
+    </h2>
+  );
+
+  const forecastTable = (
+    <div>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Datetime</th>
+            <th>Temperature</th>
+            <th>Humidity</th>
+            <th>Pressure</th>
+            <th>Clouds</th>
+            <th>Wind speed</th>
+            <th>Wind degree</th>
+            <th>Weather</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          {forecast.hourly.map((row) => {
+            const {
+              dt,
+              temp,
+              humidity,
+              pressure,
+              clouds,
+              wind_speed: windSpeed,
+              wind_deg: windDegree,
+              weather,
+            } = row;
+            return (
+              <tr key={dt.toString()}>
+                <td>{new Date(dt * 1000).toString()}</td>
+                <td>{kelvinToFahrenheit(temp)}°F</td>
+                <td>{humidity}%</td>
+                <td>{pressure} atm</td>
+                <td>{clouds} %</td>
+                <td>{windSpeed} m/s</td>
+                <td>{windDegree}°</td>
+                <td>{weather[0].main}</td>
+                <td>{weather[0].description}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+  
   if (!forecast) {
     return <div />;
   }
@@ -24,63 +86,8 @@ export default function ForecastModal({
       <Button className="modalButton" onClick={toggleModal}>
         Close
       </Button>
-      <h2>
-        Hourly Forecast for&nbsp;
-        <span role="img" aria-label="pin">
-          📍
-        </span>
-        {zip}, {name}&nbsp;
-        <span role="img" aria-label="thermometer">
-          🌡
-        </span>
-        {temperature}°F, {currentConditions}
-      </h2>
-      <div>
-        <div>
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Datetime</th>
-                <th>Temperature</th>
-                <th>Humidity</th>
-                <th>Pressure</th>
-                <th>Clouds</th>
-                <th>Wind speed</th>
-                <th>Wind degree</th>
-                <th>Weather</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              {forecast.hourly.map((row) => {
-                const {
-                  dt,
-                  temp,
-                  humidity,
-                  pressure,
-                  clouds,
-                  wind_speed: windSpeed,
-                  wind_deg: windDegree,
-                  weather,
-                } = row;
-                return (
-                  <tr key={dt.toString()}>
-                    <td>{(new Date(dt * 1000)).toString()}</td>
-                    <td>{(((+temp - 273.15) * 9) / 5 + 32).toFixed(2)}°F</td>
-                    <td>{humidity}%</td>
-                    <td>{pressure} atm</td>
-                    <td>{clouds} %</td>
-                    <td>{windSpeed} m/s</td>
-                    <td>{windDegree}°</td>
-                    <td>{weather[0].main}</td>
-                    <td>{weather[0].description}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      {forecastHeader}
+      <div>{forecastTable}</div>
     </Modal>
   );
 }
