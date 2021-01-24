@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import ForecastModal from './ForecastModal.jsx';
 
-export default function ZipCode({ zipCode, removeZipCode }) {
+export default function ZipCode({ zipCode, removeZipCode, zipCodes, setZipCodes }) {
   const { zip, name, currentConditions, temp, forecast } = zipCode;
   const [isOpen, setIsOpen] = useState(false);
 
@@ -38,7 +38,7 @@ export default function ZipCode({ zipCode, removeZipCode }) {
       <div>
         <Button
           onClick={() => {
-            removeZipCode(zip);
+            removeZipCode(zip, zipCodes, setZipCodes);
             setIsOpen(false);
           }}
         >
