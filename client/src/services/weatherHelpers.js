@@ -63,7 +63,7 @@ export async function getWeatherByZipCode(
       length,
     );
   } catch (error) {
-    alert(error);
+    throw error;
   }
 }
 
@@ -82,7 +82,7 @@ export async function addZipCode(
     try {
       await axios.post(`location/${zip}`);
     } catch (error) {
-      alert(error);
+      throw error;
     }
   }
 }
@@ -96,6 +96,6 @@ export async function removeZipCode(zip, zipCodes, setZipCodes) {
   try {
     await axios.delete(`location/${zip}`);
   } catch (error) {
-    alert(error);
+    throw error;
   }
 }
