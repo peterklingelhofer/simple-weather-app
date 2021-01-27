@@ -29,6 +29,8 @@ export const GlobalStyle = createGlobalStyle`
 
   .app {
     background: linear-gradient(to right bottom, #49a09d, #203fee);
+    height: 100vh;
+    padding: 40px;
   }
   .clickable {
     cursor: pointer;

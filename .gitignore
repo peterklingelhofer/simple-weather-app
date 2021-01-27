@@ -5,6 +5,7 @@ node_modules
 stats.json
 .pnp
 .pnp.js
+.eslintcache
 
 # misc
 .DS_Store
