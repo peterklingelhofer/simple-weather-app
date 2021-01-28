@@ -24,10 +24,8 @@ const ZipCode: React.FC<LocationProps> = props => {
   const [currentConditions, setCurrentConditions] = useState('');
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
-  // const [forecast, setForecast] = useState({});
 
-  const weather = useSelector((state: any) => state.weather);
-
+  const forecast = useSelector((state: any) => state.weather);
   async function getUpdatedForecast() {
     const result = await fetchForecast(latitude, longitude);
     dispatch(updateForecast(result));
@@ -39,6 +37,7 @@ const ZipCode: React.FC<LocationProps> = props => {
     if (isOpen && latitude && longitude) {
       getUpdatedForecast();
     }
+    console.table(forecast);
   };
 
   // Get current conditions and forecast for this location
