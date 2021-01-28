@@ -1,7 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
 import { Button } from '@material-ui/core';
-import { kelvinToFahrenheit } from '../../../utils/conversionHelpers';
 
 export default function ForecastModal({
   zip,
@@ -67,7 +66,7 @@ export default function ForecastModal({
               return (
                 <tr key={dt.toString()}>
                   <td>{new Date(dt * 1000).toString()}</td>
-                  <td>{kelvinToFahrenheit(temp)}°F</td>
+                  <td>{temp}°F</td>
                   <td>{humidity}%</td>
                   <td>{pressure} atm</td>
                   <td>{clouds} %</td>
