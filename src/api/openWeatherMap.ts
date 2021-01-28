@@ -41,14 +41,15 @@ export async function fetchCurrentConditions(
 
 export async function fetchForecast(lat: number, lng: number) {
   // Hourly
-  // const url = `${openWeatherMapAPI}/onecall?lat=${lat}&lon=${lng}&appid=${process.env.REACT_APP_OPEN_WEATHER_MAP_API_KEY}`
+  const url = `${openWeatherMapAPI}/onecall?lat=${lat}&lon=${lng}&appid=${process.env.REACT_APP_OPEN_WEATHER_MAP_API_KEY}`;
   // Daily
-  const url = `${openWeatherMapAPI}/forecast/daily?lat=${lat}&lon=${lng}&appid=${process.env.REACT_APP_OPEN_WEATHER_MAP_API_KEY}`;
-  // const response = await fetch(url);
-  // if (response.ok) {
-  //   const result = await response.json();
-  // } else {
-  //   console.error('Error retrieving forecast')
-  // }
-  return fetch(url);
+  // const url = `${openWeatherMapAPI}/forecast/daily?lat=${lat}&lon=${lng}&appid=${process.env.REACT_APP_OPEN_WEATHER_MAP_API_KEY}`;
+  const response = await fetch(url);
+  if (response.ok) {
+    const result = await response.json();
+    // console.table(result);
+    return result;
+  } else {
+    console.error('Error retrieving forecast');
+  }
 }

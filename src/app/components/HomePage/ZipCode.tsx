@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { removeZipCode } from '../../../store/actions/zipCodes';
+import { updateForecast } from '../../../store/actions/weather';
 import {
   fetchCurrentConditions,
   fetchForecast,
@@ -17,18 +18,26 @@ const ZipCode: React.FC<LocationProps> = props => {
   const { text: zip } = props;
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
+  const [apiValidZip, setApiValidZip] = useState(true);
   const [name, setName] = useState('');
   const [temperature, setTemperature] = useState(0);
   const [currentConditions, setCurrentConditions] = useState('');
-  const [apiValidZip, setApiValidZip] = useState(true);
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
+  // const [forecast, setForecast] = useState({});
+
+  const weather = useSelector((state: any) => state.weather);
+
+  async function getUpdatedForecast() {
+    const result = await fetchForecast(latitude, longitude);
+    dispatch(updateForecast(result));
+  }
 
   // Toggle Forecast Modal. If open, fetch forecast
   const toggleModal = () => {
     setIsOpen(!isOpen);
     if (isOpen && latitude && longitude) {
-      fetchForecast(latitude, longitude);
+      getUpdatedForecast();
     }
   };
 
@@ -74,8 +83,8 @@ const ZipCode: React.FC<LocationProps> = props => {
         {/* <ForecastModal
           toggleModal={toggleModal}
           isOpen={isOpen}
+          forecast={forecast}
           zipCodeHeader={zipCodeHeader}
-          name={name}
           latitude={latitude}
           longitude={longitude}
         /> */}
