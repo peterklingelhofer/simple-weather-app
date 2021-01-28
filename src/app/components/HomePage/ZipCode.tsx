@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { removeZipCode } from '../../../store/actions/zipCodes';
-import { fetchCurrentConditions } from '../../../api/openWeatherMap';
+import {
+  fetchCurrentConditions,
+  fetchForecast,
+} from '../../../api/openWeatherMap';
 import { Button } from '@material-ui/core';
 import ForecastModal from './ForecastModal';
 
@@ -18,10 +21,15 @@ const ZipCode: React.FC<LocationProps> = props => {
   const [temperature, setTemperature] = useState(0);
   const [currentConditions, setCurrentConditions] = useState('');
   const [apiValidZip, setApiValidZip] = useState(true);
-  const [latitude, setLatitude] = useState('');
-  const [longitude, setLongitude] = useState('');
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
+
+  // Toggle Forecast Modal. If open, fetch forecast
   const toggleModal = () => {
     setIsOpen(!isOpen);
+    if (isOpen && latitude && longitude) {
+      fetchForecast(latitude, longitude);
+    }
   };
 
   // Get current conditions and forecast for this location
