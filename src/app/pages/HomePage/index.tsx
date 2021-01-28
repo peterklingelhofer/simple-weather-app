@@ -2,20 +2,24 @@ import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet-async';
 import ZipCodeForm from '../../components/HomePage/ZipCodeForm';
+import ZipCode from '../../components/HomePage/ZipCode';
 
 interface ZipCodeProps {
-  id?: number;
-  text?: string;
+  id: number;
+  text: string;
 }
 
 export function HomePage() {
   const zipCodes = useSelector((state: any) => state.zipCodes);
-  const zipCodeList = zipCodes?.map((zipCode: ZipCodeProps) => (
-    <li className="zipCode" key={zipCode?.id}>
-      {zipCode?.text}
-    </li>
-  ));
+  // const zipCodeList = zipCodes?.map((zipCode: ZipCodeProps) => (
+  //   <li className="zipCode" key={zipCode?.id}>
+  //     {zipCode?.text}
+  //   </li>
+  // ));
 
+  const zipCodeList = zipCodes?.map((zipCode: ZipCodeProps) => (
+    <ZipCode key={zipCode.id} id={zipCode.id} text={zipCode.text} />
+  ));
   return (
     <>
       <div className="app">

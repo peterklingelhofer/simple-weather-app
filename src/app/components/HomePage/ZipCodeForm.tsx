@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FormEvent, useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Button } from '@material-ui/core';
-import { addZipCode } from '../../../store/zipCodes/actions';
+import { addZipCode } from '../../../store/actions/zipCodes';
 
 const ZipCodeForm: React.FC = () => {
   const dispatch = useDispatch();
