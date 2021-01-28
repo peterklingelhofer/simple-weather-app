@@ -37,7 +37,6 @@ const ZipCode: React.FC<LocationProps> = props => {
     if (isOpen && latitude && longitude) {
       getUpdatedForecast();
     }
-    console.table(forecast);
   };
 
   // Get current conditions and forecast for this location
@@ -62,7 +61,7 @@ const ZipCode: React.FC<LocationProps> = props => {
     return <></>;
   }
 
-  const zipCodeHeader = (
+  const weatherHeader = (
     <div className="clickable" onClick={toggleModal}>
       <span role="img" aria-label="pin">
         📍
@@ -77,16 +76,13 @@ const ZipCode: React.FC<LocationProps> = props => {
 
   return (
     <div className="zipCode">
-      {zipCodeHeader}
+      {weatherHeader}
       <div onClick={toggleModal}>
-        {/* <ForecastModal
+        <ForecastModal
           toggleModal={toggleModal}
           isOpen={isOpen}
-          forecast={forecast}
-          zipCodeHeader={zipCodeHeader}
-          latitude={latitude}
-          longitude={longitude}
-        /> */}
+          weatherHeader={weatherHeader}
+        />
       </div>
       <div>
         <Button

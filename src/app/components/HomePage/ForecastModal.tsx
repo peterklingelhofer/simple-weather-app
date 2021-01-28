@@ -1,29 +1,23 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import Modal from 'react-modal';
 import { Button } from '@material-ui/core';
 
-export default function ForecastModal({
-  zip,
-  name,
-  currentConditions,
-  temperature,
-  forecast,
-  toggleModal,
-  isOpen,
-}) {
-  const forecastHeader = (
-    <h2>
-      Hourly Forecast for&nbsp;
-      <span role="img" aria-label="pin">
-        📍
-      </span>
-      {zip}, {name}&nbsp;
-      <span role="img" aria-label="thermometer">
-        🌡
-      </span>
-      {temperature}°F, {currentConditions}
-    </h2>
-  );
+interface ForecastModalProps {
+  toggleModal: any;
+  isOpen: boolean;
+  weatherHeader: React.DetailedHTMLProps<
+    React.HTMLAttributes<HTMLDivElement>,
+    HTMLDivElement
+  >;
+}
+
+const ForecastModal: React.FC<ForecastModalProps> = props => {
+  const forecast = useSelector((state: any) => state.weather);
+  const { toggleModal, isOpen, weatherHeader } = props;
+  if (!forecast) {
+    return <></>;
+  }
 
   const forecastTable = (
     <div>
@@ -42,7 +36,7 @@ export default function ForecastModal({
           </tr>
         </thead>
         <tbody>
-          {forecast.hourly.map(
+          {forecast[0].hourly.map(
             (row: {
               dt: number;
               temp: number;
@@ -96,8 +90,10 @@ export default function ForecastModal({
       <Button className="modalButton" onClick={toggleModal}>
         Close
       </Button>
-      {forecastHeader}
+      {weatherHeader}
       <div>{forecastTable}</div>
     </Modal>
   );
-}
+};
+
+export default ForecastModal;
