@@ -1,32 +1,28 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Button } from '@material-ui/core';
+import { removeZipCode } from '../../../store/actions/zipCodes';
 import ForecastModal from './ForecastModal';
-import { kelvinToFahrenheit } from '../../../utils/conversionHelpers';
 
-const ZipCode: React.FC = () => {
-  // const { zip, name, currentConditions, temp, forecast } = zipCode;
+interface LocationProps {
+  id: number;
+  text: string;
+}
+
+const ZipCode: React.FC<LocationProps> = props => {
+  const { text } = props;
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
-  // if (!temp) {
-  //   return <></>;
-  // }
-
   const toggleModal = () => {
     setIsOpen(!isOpen);
   };
-
-  // const temperature = kelvinToFahrenheit(temp);
 
   const zipCodeHeader = (
     <div className="clickable" onClick={toggleModal}>
       <span role="img" aria-label="pin">
         📍
       </span>
-      {/* {zip} */}
-      {/* , {name}&nbsp;
-      <span role="img" aria-label="thermometer">
-        🌡
-      </span>
-      {temperature}°F, {currentConditions} */}
+      {text}
     </div>
   );
 
@@ -47,7 +43,7 @@ const ZipCode: React.FC = () => {
       <div>
         <Button
           onClick={() => {
-            // removeZipCode(zip, zipCodes, setZipCodes);
+            dispatch(removeZipCode(text));
             setIsOpen(false);
           }}
         >

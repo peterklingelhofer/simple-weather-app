@@ -2,7 +2,7 @@ import { createStore, combineReducers } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import zipCodesReducer from './zipCodes/reducer';
+import zipCodesReducer from './reducers/zipCodesReducer';
 
 const rootReducer = combineReducers({
   zipCodes: zipCodesReducer,
