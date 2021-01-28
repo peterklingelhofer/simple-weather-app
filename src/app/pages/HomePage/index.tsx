@@ -11,11 +11,6 @@ interface ZipCodeProps {
 
 export function HomePage() {
   const zipCodes = useSelector((state: any) => state.zipCodes);
-  // const zipCodeList = zipCodes?.map((zipCode: ZipCodeProps) => (
-  //   <li className="zipCode" key={zipCode?.id}>
-  //     {zipCode?.text}
-  //   </li>
-  // ));
 
   const zipCodeList = zipCodes?.map((zipCode: ZipCodeProps) => (
     <ZipCode key={zipCode.id} id={zipCode.id} text={zipCode.text} />

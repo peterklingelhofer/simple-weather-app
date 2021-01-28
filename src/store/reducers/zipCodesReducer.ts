@@ -18,7 +18,7 @@ export default function zipCodes(state = [], action: any) {
       const index = newZipCodes.findIndex(
         (location: Location) => location.text === action.text,
       );
-      newZipCodes.splice(index, 1);
+      if (index >= 0) newZipCodes.splice(index, 1);
       return newZipCodes;
     default:
       return state;
