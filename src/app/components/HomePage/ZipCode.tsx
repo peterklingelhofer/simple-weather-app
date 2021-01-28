@@ -3,41 +3,37 @@ import { Button } from '@material-ui/core';
 import ForecastModal from './ForecastModal';
 import { kelvinToFahrenheit } from '../../../utils/conversionHelpers';
 
-export default function ZipCode({
-  zipCode,
-  // removeZipCode,
-  zipCodes,
-  // setZipCodes,
-}) {
-  const { zip, name, currentConditions, temp, forecast } = zipCode;
+const ZipCode: React.FC = () => {
+  // const { zip, name, currentConditions, temp, forecast } = zipCode;
   const [isOpen, setIsOpen] = useState(false);
-  if (!temp) {
-    return <div />;
-  }
+  // if (!temp) {
+  //   return <></>;
+  // }
 
   const toggleModal = () => {
     setIsOpen(!isOpen);
   };
 
-  const temperature = kelvinToFahrenheit(temp);
+  // const temperature = kelvinToFahrenheit(temp);
 
   const zipCodeHeader = (
     <div className="clickable" onClick={toggleModal}>
       <span role="img" aria-label="pin">
         📍
       </span>
-      {zip}, {name}&nbsp;
+      {/* {zip} */}
+      {/* , {name}&nbsp;
       <span role="img" aria-label="thermometer">
         🌡
       </span>
-      {temperature}°F, {currentConditions}
+      {temperature}°F, {currentConditions} */}
     </div>
   );
 
   return (
     <div className="zipCode">
       {zipCodeHeader}
-      <div onClick={toggleModal}>
+      {/* <div onClick={toggleModal}>
         <ForecastModal
           toggleModal={toggleModal}
           zip={zip}
@@ -47,7 +43,7 @@ export default function ZipCode({
           forecast={forecast}
           isOpen={isOpen}
         />
-      </div>
+      </div> */}
       <div>
         <Button
           onClick={() => {
@@ -60,4 +56,6 @@ export default function ZipCode({
       </div>
     </div>
   );
-}
+};
+
+export default ZipCode;

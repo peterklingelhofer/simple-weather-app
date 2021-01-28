@@ -38,7 +38,13 @@ export const GlobalStyle = createGlobalStyle`
   .zipCodeSubmit {
     display: flex;
     justify-content: space-between;
-    padding-bottom: 5px;
+    margin-bottom: 5px;
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 5px;
+    max-width: 600px;
+    background: #e8e8e8;
   }
   .zipCode {
     display: flex;
@@ -50,6 +56,7 @@ export const GlobalStyle = createGlobalStyle`
     border-radius: 5px;
     margin-bottom: 5px;
     padding: 5px 10px;
+    margin-left: -40px;
     transition: all 0.2s ease-in-out;
   }
   .zipCode:hover {
@@ -57,6 +64,8 @@ export const GlobalStyle = createGlobalStyle`
   }
   .zipCode-list {
     padding: 5px;
+    padding-top: 0;
+    padding-bottom: 0;
     border-radius: 5px;
     max-width: 600px;
     background: #e8e8e8;
