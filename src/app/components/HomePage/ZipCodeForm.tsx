@@ -1,34 +1,40 @@
-import React, { useState, useEffect } from 'react';
+import React, { ChangeEvent, FormEvent, useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '@material-ui/core';
+import { addZipCode } from '../../../store/zipCodes/actions';
 
-export default function ZipCodeForm({
-  zipCodes,
-  // addZipCode,
-  // setZipCodes,
-}) {
-  const [value, setValue] = useState('');
-  const [formValidation, setFormValidation] = useState(false);
+interface ZipCodeProps {
+  id?: number;
+  text?: string;
+}
+
+const ZipCodeForm: React.FC = () => {
+  const dispatch = useDispatch();
+
+  const zipCodes = useSelector((state: any) => state.zipCodes);
+  const [formValidationFailure, setFormValidationFailure] = useState(false);
   const [formValidationSuccess, setFormValidationSuccess] = useState(false);
+  const [zipCodeText, setZipCodeText] = useState('');
 
-  useEffect(() => {
-    formValidation && setFormValidation(false);
-    value && formValidationSuccess && setFormValidationSuccess(false);
-  }, [value]);
-
-  const handleSubmit = (e: { preventDefault: () => void }) => {
+  const handleSubmit = async (event: FormEvent) => {
     const regexp = /^[0-9]{5}(?:-[0-9]{4})?$/;
-    e.preventDefault();
-    if (!value) return;
-    if (regexp.test(value)) {
-      // addZipCode(value, zipCodes, setZipCodes, storedZipCodes, length);
-      setValue('');
+    event.preventDefault();
+    if (!zipCodeText) return;
+    if (regexp.test(zipCodeText)) {
+      dispatch(addZipCode(zipCodeText));
+      setZipCodeText('');
       setFormValidationSuccess(true);
     } else {
-      setFormValidation(true);
+      setFormValidationFailure(true);
     }
   };
 
-  const zipCodeInvalid = formValidation && (
+  const handleInputChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setZipCodeText(value);
+  };
+
+  const zipCodeInvalid = formValidationFailure && (
     <div className="redText center">Please provide a valid zip code.</div>
   );
 
@@ -36,6 +42,14 @@ export default function ZipCodeForm({
     <div className="greenText center">Valid zip code provided.</div>
   );
 
+  useEffect(() => {
+    formValidationFailure && setFormValidationFailure(false);
+    zipCodeText && formValidationSuccess && setFormValidationSuccess(false);
+  }, [zipCodeText]);
+
+  const zipCodeList = zipCodes?.map((zipCode: ZipCodeProps) => (
+    <li key={zipCode?.id}>{zipCode?.text}</li>
+  ));
   return (
     <div className="zipCodeSubmit">
       <form onSubmit={handleSubmit}>
@@ -43,13 +57,17 @@ export default function ZipCodeForm({
           type="text"
           className="input formControl"
           placeholder="Enter Zip Code"
-          value={value}
-          onChange={e => setValue(e.target.value)}
+          onChange={handleInputChange}
         />
       </form>
       {zipCodeInvalid}
       {zipCodeValid}
-      <Button onClick={handleSubmit}>Add</Button>
+      <Button type="submit" onClick={handleSubmit}>
+        Add
+      </Button>
+      <ul>{zipCodeList}</ul>
     </div>
   );
-}
+};
+
+export default ZipCodeForm;
