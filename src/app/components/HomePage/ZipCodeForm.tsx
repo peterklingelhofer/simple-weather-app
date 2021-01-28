@@ -2,11 +2,13 @@ import React, { ChangeEvent, FormEvent, useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Button } from '@material-ui/core';
 import { addZipCode } from '../../../store/actions/zipCodes';
+import { fetchZipCodeValidation } from '../../../api/openWeatherMap';
 
 const ZipCodeForm: React.FC = () => {
   const dispatch = useDispatch();
   const [formValidationFailure, setFormValidationFailure] = useState(false);
   const [formValidationSuccess, setFormValidationSuccess] = useState(false);
+  const [apiValidZip, setApiValidZip] = useState(false);
   const [zipCodeText, setZipCodeText] = useState('');
 
   const handleSubmit = async (event: FormEvent) => {
@@ -14,12 +16,15 @@ const ZipCodeForm: React.FC = () => {
     event.preventDefault();
     if (!zipCodeText) return;
     if (regexp.test(zipCodeText)) {
+      await fetchZipCodeValidation(zipCodeText, setApiValidZip);
       dispatch(addZipCode(zipCodeText));
-      setZipCodeText('');
       setFormValidationSuccess(true);
     } else {
       setFormValidationFailure(true);
     }
+    Array.from(document.querySelectorAll('input')).forEach(
+      input => (input.value = ''),
+    );
   };
 
   const handleInputChange = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -27,11 +32,11 @@ const ZipCodeForm: React.FC = () => {
     setZipCodeText(value);
   };
 
-  const zipCodeInvalid = formValidationFailure && (
-    <div className="redText center">Please provide a valid zip code.</div>
+  const zipCodeInvalid = formValidationFailure && apiValidZip && (
+    <div className="redText center">Please provide a valid U.S. zip code.</div>
   );
 
-  const zipCodeValid = formValidationSuccess && (
+  const zipCodeValid = formValidationSuccess && apiValidZip && (
     <div className="greenText center">Valid zip code provided.</div>
   );
 
@@ -39,6 +44,14 @@ const ZipCodeForm: React.FC = () => {
     setFormValidationFailure(false);
     zipCodeText && setFormValidationSuccess(false);
   }, [zipCodeText]);
+
+  useEffect(() => {
+    zipCodeText &&
+      !apiValidZip &&
+      setFormValidationFailure(true) &&
+      setFormValidationSuccess(false);
+    zipCodeText && apiValidZip && setFormValidationSuccess(false);
+  }, [apiValidZip]);
 
   return (
     <>

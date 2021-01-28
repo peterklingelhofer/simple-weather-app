@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Button } from '@material-ui/core';
-import { fetchCurrentConditions } from '../../../api/openWeatherMap';
 import { removeZipCode } from '../../../store/actions/zipCodes';
+import { fetchCurrentConditions } from '../../../api/openWeatherMap';
+import { Button } from '@material-ui/core';
 import ForecastModal from './ForecastModal';
 
 interface LocationProps {
@@ -17,6 +17,7 @@ const ZipCode: React.FC<LocationProps> = props => {
   const [name, setName] = useState('');
   const [temperature, setTemperature] = useState(0);
   const [currentConditions, setCurrentConditions] = useState('');
+  const [apiValidZip, setApiValidZip] = useState(true);
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
   const toggleModal = () => {
@@ -27,6 +28,7 @@ const ZipCode: React.FC<LocationProps> = props => {
   useEffect(() => {
     fetchCurrentConditions(
       zip,
+      setApiValidZip,
       setName,
       setTemperature,
       setCurrentConditions,
@@ -34,6 +36,11 @@ const ZipCode: React.FC<LocationProps> = props => {
       setLongitude,
     );
   }, []);
+
+  // Zip Code Validation with Open Weather API
+  useEffect(() => {
+    if (!apiValidZip) dispatch(removeZipCode(zip));
+  }, [apiValidZip]);
 
   if (!name) {
     return <></>;
@@ -58,12 +65,11 @@ const ZipCode: React.FC<LocationProps> = props => {
       <div onClick={toggleModal}>
         {/* <ForecastModal
           toggleModal={toggleModal}
-          zip={zip}
-          name={name}
-          currentConditions={currentConditions}
-          temperature={temperature}
-          forecast={forecast}
           isOpen={isOpen}
+          zipCodeHeader={zipCodeHeader}
+          name={name}
+          latitude={latitude}
+          longitude={longitude}
         /> */}
       </div>
       <div>

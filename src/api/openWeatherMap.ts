@@ -1,9 +1,24 @@
 import { kelvinToFahrenheit } from '../utils/conversionHelpers';
 const openWeatherMapAPI = 'https://api.openweathermap.org/data/2.5';
 
+// Zip Code Validation
+export async function fetchZipCodeValidation(
+  zip: string | number,
+  setApiValidZip: Function,
+) {
+  const url = `${openWeatherMapAPI}/weather?zip=${zip}&appid=${process.env.REACT_APP_OPEN_WEATHER_MAP_API_KEY}`;
+  const response = await fetch(url);
+  if (response.ok) {
+    setApiValidZip(true);
+  } else {
+    setApiValidZip(false);
+  }
+}
+
 // Get current weather conditions with Zip Code
 export async function fetchCurrentConditions(
   zip: string | number,
+  setApiValidZip: Function,
   setName: Function,
   setTemperature: Function,
   setCurrentConditions: Function,
@@ -11,17 +26,17 @@ export async function fetchCurrentConditions(
   setLongitude: Function,
 ) {
   const url = `${openWeatherMapAPI}/weather?zip=${zip}&appid=${process.env.REACT_APP_OPEN_WEATHER_MAP_API_KEY}`;
-  await fetch(url)
-    .then(response => response.json())
-    .then(result => {
-      // console.table(result);
-      setName(result.name);
-      setTemperature(kelvinToFahrenheit(result.main.temp));
-      setCurrentConditions(result.weather[0].main);
-      setLatitude(+result.coord.lat);
-      setLongitude(+result.coord.lon);
-    })
-    .catch(error => console.log('error', error));
+  const response = await fetch(url);
+  if (response.ok) {
+    const result = await response.json();
+    setName(result.name);
+    setTemperature(kelvinToFahrenheit(result.main.temp));
+    setCurrentConditions(result.weather[0].main);
+    setLatitude(+result.coord.lat);
+    setLongitude(+result.coord.lon);
+  } else {
+    setApiValidZip(false);
+  }
 }
 
 export async function fetchForecast(lat: number, lng: number) {
