@@ -22,6 +22,7 @@ const ZipCodeForm: React.FC = () => {
     if (!formInput) return;
     const validation = await locationValidation(formInput, zipCodes);
     dispatch(zipCodeValidation(validation));
+    setTimeout(() => dispatch(zipCodeValidation('')), 6000);
     if (validation === 'valid') dispatch(addZipCode(formInput));
     Array.from(document.querySelectorAll('input')).forEach(
       input => (input.value = ''),

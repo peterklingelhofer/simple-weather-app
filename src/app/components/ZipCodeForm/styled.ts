@@ -14,6 +14,7 @@ export const ZipCodeFormContainer = styled.div`
   }
   input {
     margin-top: 2px;
+    padding: 5px;
     border-radius: 5px;
     background: #202124;
     color: #fff;
