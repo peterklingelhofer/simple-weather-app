@@ -3,10 +3,12 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import zipCodesReducer from './reducers/zipCodesReducer';
+import zipCodeFormReducer from './reducers/zipCodeFormReducer';
 import weatherReducer from './reducers/weatherReducer';
 
 const rootReducer = combineReducers({
   zipCodes: zipCodesReducer,
+  zipCodeForm: zipCodeFormReducer,
   weather: weatherReducer,
 });
 

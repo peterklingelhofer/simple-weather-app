@@ -2,19 +2,13 @@ import { kelvinToFahrenheit } from '../utils/temperatureConversion';
 const openWeatherMapAPI = 'https://api.openweathermap.org/data/2.5';
 
 // Zip Code Validation
-export async function fetchZipCodeValidation(
-  zip: string | number,
-  setZipCodeValidationStatus: Function,
-  setShowValidation: Function,
-) {
+export async function fetchZipCodeValidation(zip: string | number) {
   const url = `${openWeatherMapAPI}/weather?zip=${zip}&appid=${process.env.REACT_APP_OPEN_WEATHER_MAP_API_KEY}`;
   const response = await fetch(url);
   if (response.ok) {
-    setZipCodeValidationStatus('valid');
-    setShowValidation(true);
+    return true;
   } else {
-    setZipCodeValidationStatus('invalid');
-    setShowValidation(true);
+    return false;
   }
 }
 
