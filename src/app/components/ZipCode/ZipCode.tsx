@@ -68,27 +68,33 @@ const ZipCode: React.FC<LocationProps> = props => {
       {temperature}°F, {currentConditions}
     </div>
   );
+  const forecastModal = (
+    <div onClick={toggleModal}>
+      <ForecastModal
+        toggleModal={toggleModal}
+        isOpen={isOpen}
+        weatherHeader={weatherHeader}
+      />
+    </div>
+  );
+  const removeZipCodeButton = (
+    <div>
+      <Button
+        onClick={() => {
+          dispatch(removeZipCode(zip));
+          setIsOpen(false);
+        }}
+      >
+        X
+      </Button>
+    </div>
+  );
 
   return (
     <div className="zipCode">
       {weatherHeader}
-      <div onClick={toggleModal}>
-        <ForecastModal
-          toggleModal={toggleModal}
-          isOpen={isOpen}
-          weatherHeader={weatherHeader}
-        />
-      </div>
-      <div>
-        <Button
-          onClick={() => {
-            dispatch(removeZipCode(zip));
-            setIsOpen(false);
-          }}
-        >
-          X
-        </Button>
-      </div>
+      {forecastModal}
+      {removeZipCodeButton}
     </div>
   );
 };
