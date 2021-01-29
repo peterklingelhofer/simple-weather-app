@@ -46,11 +46,10 @@ const ZipCodeForm: React.FC = () => {
   }, [zipCodeText]);
 
   useEffect(() => {
-    zipCodeText &&
-      !apiValidZip &&
+    !apiValidZip &&
       setFormValidationFailure(true) &&
       setFormValidationSuccess(false);
-    zipCodeText && apiValidZip && setFormValidationSuccess(false);
+    apiValidZip && setFormValidationSuccess(false);
   }, [apiValidZip]);
 
   return (

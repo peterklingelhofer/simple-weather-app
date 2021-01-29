@@ -49,12 +49,12 @@ const ZipCode: React.FC<LocationProps> = props => {
       setLatitude,
       setLongitude,
     );
-  }, []);
+  }, [zip]);
 
   // Zip Code Validation with Open Weather API
   useEffect(() => {
     if (!apiValidZip) dispatch(removeZipCode(zip));
-  }, [apiValidZip]);
+  }, [apiValidZip, zip, dispatch]);
 
   if (!name) {
     return <></>;

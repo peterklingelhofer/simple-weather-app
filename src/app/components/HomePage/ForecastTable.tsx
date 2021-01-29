@@ -44,8 +44,8 @@ export default function ForecastTable() {
       weather,
     } = row;
     return (
-      <TableBody>
-        <TableRow key={dt.toString()}>
+      <TableBody key={dt.toString()}>
+        <TableRow>
           <TableCell component="th" scope="row">
             {new Date(dt * 1000).toString()}
           </TableCell>
