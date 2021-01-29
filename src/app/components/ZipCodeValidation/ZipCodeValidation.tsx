@@ -22,14 +22,14 @@ const ZipCodeValidation: React.FC = () => {
       break;
     case 'duplicate':
       zipCodeValidation = (
-        <div className="blueText center">Duplicate zip code entered.</div>
+        <div className="yellowText center">Duplicate zip code entered.</div>
       );
       break;
     default:
       zipCodeValidation = <></>;
   }
 
-  return <>{zipCodeValidation}</>;
+  return zipCodeValidation;
 };
 
 export default ZipCodeValidation;

@@ -8,7 +8,10 @@ import {
 } from '../../../api/openWeatherMap';
 import { Button } from '@material-ui/core';
 import ForecastModal from '../ForecastModal/ForecastModal';
+import { ThemeProvider } from '@material-ui/styles';
+import { darkTheme } from '../../../styles/theme';
 import { LocationProps } from './types';
+import { ZipCodeContainer } from './styled';
 
 const ZipCode: React.FC<LocationProps> = props => {
   const { text: zip } = props;
@@ -57,7 +60,7 @@ const ZipCode: React.FC<LocationProps> = props => {
   }
 
   const weatherHeader = (
-    <div className="clickable" onClick={toggleModal}>
+    <div className="clickable whiteText" onClick={toggleModal}>
       <span role="img" aria-label="pin">
         📍
       </span>
@@ -65,7 +68,7 @@ const ZipCode: React.FC<LocationProps> = props => {
       <span role="img" aria-label="thermometer">
         🌡
       </span>
-      {temperature}°F, {currentConditions}
+      {temperature}&deg;F, {currentConditions}
     </div>
   );
   const forecastModal = (
@@ -78,7 +81,7 @@ const ZipCode: React.FC<LocationProps> = props => {
     </div>
   );
   const removeZipCodeButton = (
-    <div>
+    <ThemeProvider theme={darkTheme}>
       <Button
         onClick={() => {
           dispatch(removeZipCode(zip));
@@ -87,15 +90,17 @@ const ZipCode: React.FC<LocationProps> = props => {
       >
         X
       </Button>
-    </div>
+    </ThemeProvider>
   );
 
   return (
-    <div className="zipCode">
-      {weatherHeader}
-      {forecastModal}
-      {removeZipCodeButton}
-    </div>
+    <ZipCodeContainer>
+      <div className="zipCode">
+        {weatherHeader}
+        {forecastModal}
+        {removeZipCodeButton}
+      </div>
+    </ZipCodeContainer>
   );
 };
 
