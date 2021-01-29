@@ -1,22 +1,18 @@
-interface Location {
-  id: number;
-  text: string;
-}
-
 export default function zipCodes(state = [], action: any) {
-  switch (action.type) {
+  const { text, type } = action;
+  switch (type) {
     case 'ADD_ZIPCODE':
       return [
         ...state,
         {
           id: Math.random(),
-          text: action.text,
+          text: text,
         },
       ];
     case 'REMOVE_ZIPCODE':
       const newZipCodes = [...state];
       const index = newZipCodes.findIndex(
-        (location: Location) => location.text === action.text,
+        (location: { id: number; text: string }) => location.text === text,
       );
       if (index >= 0) newZipCodes.splice(index, 1);
       return newZipCodes;

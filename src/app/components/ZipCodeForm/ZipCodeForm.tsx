@@ -1,47 +1,35 @@
-import React, { ChangeEvent, FormEvent, useState, useEffect } from 'react';
+import React, { ChangeEvent, FormEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '@material-ui/core';
+import ZipCodeValidation from './../ZipCodeValidation/ZipCodeValidation';
 import { addZipCode } from '../../../store/actions/zipCodes';
-import { fetchZipCodeValidation } from '../../../api/openWeatherMap';
+import {
+  userInput,
+  zipCodeValidation,
+} from '../../../store/actions/zipCodeForm';
+import { locationValidation } from '../../../utils/locationValidation';
 
 const ZipCodeForm: React.FC = () => {
   const dispatch = useDispatch();
-  const [showValidation, setShowValidation] = useState(false);
-  const [zipCodeValidationStatus, setZipCodeValidationStatus] = useState('');
-  const [zipCodeText, setZipCodeText] = useState('');
   const zipCodes = useSelector((state: any) => state.zipCodes);
+  const { formInput } = useSelector((state: any) => state.zipCodeForm);
 
   const handleSubmit = async (event: FormEvent) => {
-    const regexp = /^[0-9]{5}(?:-[0-9]{4})?$/;
     event.preventDefault();
-    if (!zipCodeText) return;
-    if (
-      zipCodes.findIndex(
-        (location: { text: string }) => location.text === zipCodeText,
-      ) >= 0
-    ) {
-      setShowValidation(true);
-      setZipCodeValidationStatus('duplicate');
-    } else if (!regexp.test(zipCodeText)) {
-      setZipCodeValidationStatus('invalid');
-      setShowValidation(true);
-    } else {
-      await fetchZipCodeValidation(
-        zipCodeText,
-        setZipCodeValidationStatus,
-        setShowValidation,
-      );
-      dispatch(addZipCode(zipCodeText));
-    }
+    if (!formInput) return;
+    const validation = await locationValidation(formInput, zipCodes);
+    dispatch(zipCodeValidation(validation));
+    if (validation === 'valid') dispatch(addZipCode(formInput));
     Array.from(document.querySelectorAll('input')).forEach(
       input => (input.value = ''),
     );
-    setZipCodeText('');
+    dispatch(userInput(''));
   };
 
   const handleInputChange = async (event: ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-    setZipCodeText(value);
+    const { target } = event;
+    const { value } = target;
+    dispatch(userInput(value));
   };
 
   const zipCodeSubmitForm = (
@@ -55,29 +43,6 @@ const ZipCodeForm: React.FC = () => {
     </form>
   );
 
-  let zipCodeValidation: JSX.Element;
-  switch (zipCodeValidationStatus) {
-    case 'valid':
-      zipCodeValidation = (
-        <div className="greenText center">Valid zip code provided.</div>
-      );
-      break;
-    case 'invalid':
-      zipCodeValidation = (
-        <div className="redText center">
-          Please provide a valid U.S. zip code.
-        </div>
-      );
-      break;
-    case 'duplicate':
-      zipCodeValidation = (
-        <div className="blueText center">Duplicate zip code entered.</div>
-      );
-      break;
-    default:
-      zipCodeValidation = <></>;
-  }
-
   const zipCodeAddButton = (
     <Button type="submit" onClick={handleSubmit}>
       Add
@@ -85,13 +50,13 @@ const ZipCodeForm: React.FC = () => {
   );
 
   useEffect(() => {
-    zipCodeText && setShowValidation(false);
-  }, [zipCodeText]);
+    formInput && dispatch(zipCodeValidation(''));
+  }, [formInput, dispatch]);
 
   return (
     <div className="zipCodeSubmit">
       {zipCodeSubmitForm}
-      {showValidation && zipCodeValidation}
+      <ZipCodeValidation />
       {zipCodeAddButton}
     </div>
   );
