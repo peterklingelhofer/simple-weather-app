@@ -26,7 +26,7 @@ const ForecastModal: React.FC<ForecastModalProps> = props => {
         Close
       </Button>
       <h1>{weatherHeader}</h1>
-      <ForecastTable key={Math.random()} />
+      <ForecastTable />
     </Modal>
   );
 };
