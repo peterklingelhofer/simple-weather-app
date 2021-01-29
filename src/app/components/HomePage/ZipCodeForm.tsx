@@ -6,9 +6,8 @@ import { fetchZipCodeValidation } from '../../../api/openWeatherMap';
 
 const ZipCodeForm: React.FC = () => {
   const dispatch = useDispatch();
-  const [formValidationFailure, setFormValidationFailure] = useState(false);
+  const [showValidation, setShowValidation] = useState(false);
   const [formValidationSuccess, setFormValidationSuccess] = useState(false);
-  const [apiValidZip, setApiValidZip] = useState(false);
   const [zipCodeText, setZipCodeText] = useState('');
 
   const handleSubmit = async (event: FormEvent) => {
@@ -16,11 +15,15 @@ const ZipCodeForm: React.FC = () => {
     event.preventDefault();
     if (!zipCodeText) return;
     if (regexp.test(zipCodeText)) {
-      await fetchZipCodeValidation(zipCodeText, setApiValidZip);
+      await fetchZipCodeValidation(
+        zipCodeText,
+        setFormValidationSuccess,
+        setShowValidation,
+      );
       dispatch(addZipCode(zipCodeText));
-      setFormValidationSuccess(true);
     } else {
-      setFormValidationFailure(true);
+      setFormValidationSuccess(false);
+      setShowValidation(true);
     }
     Array.from(document.querySelectorAll('input')).forEach(
       input => (input.value = ''),
@@ -32,25 +35,17 @@ const ZipCodeForm: React.FC = () => {
     setZipCodeText(value);
   };
 
-  const zipCodeInvalid = formValidationFailure && apiValidZip && (
+  const zipCodeInvalid = showValidation && !formValidationSuccess && (
     <div className="redText center">Please provide a valid U.S. zip code.</div>
   );
 
-  const zipCodeValid = formValidationSuccess && apiValidZip && (
+  const zipCodeValid = showValidation && formValidationSuccess && (
     <div className="greenText center">Valid zip code provided.</div>
   );
 
   useEffect(() => {
-    setFormValidationFailure(false);
-    zipCodeText && setFormValidationSuccess(false);
+    setShowValidation(false);
   }, [zipCodeText]);
-
-  useEffect(() => {
-    !apiValidZip &&
-      setFormValidationFailure(true) &&
-      setFormValidationSuccess(false);
-    apiValidZip && setFormValidationSuccess(false);
-  }, [apiValidZip]);
 
   return (
     <>
