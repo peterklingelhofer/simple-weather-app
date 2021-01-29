@@ -33,7 +33,7 @@ const ZipCode: React.FC<LocationProps> = props => {
   // Toggle Forecast Modal. If open, fetch forecast
   const toggleModal = () => {
     setIsOpen(!isOpen);
-    if (isOpen && latitude && longitude) {
+    if (latitude && longitude) {
       getUpdatedForecast();
     }
   };
