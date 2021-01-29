@@ -1,6 +1,6 @@
-export function updateForecast(object: object) {
+export function updateForecast(payload: object) {
   return {
     type: 'UPDATE_FORECAST',
-    object,
+    payload,
   };
 }

@@ -42,7 +42,8 @@ export async function fetchForecast(lat: number, lng: number) {
   const response = await fetch(url);
   if (response.ok) {
     const result = await response.json();
-    return result;
+    const { hourly } = result;
+    return hourly;
   } else {
     console.error('Error retrieving forecast');
   }
