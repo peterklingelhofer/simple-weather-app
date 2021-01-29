@@ -1,16 +1,8 @@
 import React from 'react';
 import Modal from 'react-modal';
 import { Button } from '@material-ui/core';
-import ForecastTable from './ForecastTable';
-
-interface ForecastModalProps {
-  toggleModal: any;
-  isOpen: boolean;
-  weatherHeader: React.DetailedHTMLProps<
-    React.HTMLAttributes<HTMLDivElement>,
-    HTMLDivElement
-  >;
-}
+import ForecastTable from '../ForecastTable/ForecastTable';
+import { ForecastModalProps } from './types';
 
 const ForecastModal: React.FC<ForecastModalProps> = props => {
   const { toggleModal, isOpen, weatherHeader } = props;

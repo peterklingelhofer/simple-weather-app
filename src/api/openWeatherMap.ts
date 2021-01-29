@@ -1,4 +1,4 @@
-import { kelvinToFahrenheit } from '../utils/conversionHelpers';
+import { kelvinToFahrenheit } from '../utils/temperatureConversion';
 const openWeatherMapAPI = 'https://api.openweathermap.org/data/2.5';
 
 // Zip Code Validation

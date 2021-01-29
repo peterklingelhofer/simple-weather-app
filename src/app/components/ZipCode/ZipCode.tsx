@@ -7,12 +7,8 @@ import {
   fetchForecast,
 } from '../../../api/openWeatherMap';
 import { Button } from '@material-ui/core';
-import ForecastModal from './ForecastModal';
-
-interface LocationProps {
-  id: number;
-  text: string;
-}
+import ForecastModal from '../ForecastModal/ForecastModal';
+import { LocationProps } from './types';
 
 const ZipCode: React.FC<LocationProps> = props => {
   const { text: zip } = props;
