@@ -8,18 +8,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { kelvinToFahrenheit } from '../../../utils/conversionHelpers';
-
-interface Forecast {
-  dt: number;
-  temp: number;
-  humidity: number;
-  pressure: number;
-  clouds: number;
-  wind_speed: number;
-  wind_deg: number;
-  weather: { main: string; description: string }[];
-}
+import { kelvinToFahrenheit } from '../../../utils/temperatureConversion';
+import { Forecast } from './types';
 
 const useStyles = makeStyles({
   table: {

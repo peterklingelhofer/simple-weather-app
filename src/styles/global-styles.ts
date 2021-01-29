@@ -56,7 +56,6 @@ export const GlobalStyle = createGlobalStyle`
     border-radius: 5px;
     margin-bottom: 5px;
     padding: 5px 10px;
-    margin-left: -40px;
     transition: all 0.2s ease-in-out;
   }
   .zipCode:hover {
