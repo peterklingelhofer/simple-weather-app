@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { removeZipCode } from '../../../store/actions/zipCodes';
 import { updateForecast } from '../../../store/actions/weather';
 import {
@@ -25,7 +25,6 @@ const ZipCode: React.FC<LocationProps> = props => {
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
 
-  const forecast = useSelector((state: any) => state.weather);
   async function getUpdatedForecast() {
     const result = await fetchForecast(latitude, longitude);
     dispatch(updateForecast(result));
