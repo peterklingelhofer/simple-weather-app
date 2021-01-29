@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet-async';
 import ZipCodeForm from '../../components/ZipCodeForm/ZipCodeForm';
-import ZipCode from '../../components/ZipCode/ZipCode';
-import { ZipCodeProps } from './types';
+import ZipCodeList from '../../components/ZipCodeList/ZipCodeList';
+import { HomePageContainer } from './styled';
 
 export function HomePage() {
   const helmet = (
@@ -23,22 +22,15 @@ export function HomePage() {
       &nbsp; Weather Tracker
     </h1>
   );
-  const zipCodes = useSelector((state: any) => state.zipCodes);
-  const zipCodeList = (
-    <div className="zipCode-list">
-      {zipCodes?.map((zipCode: ZipCodeProps) => (
-        <ZipCode key={zipCode.id} id={zipCode.id} text={zipCode.text} />
-      ))}
-    </div>
-  );
+
   return (
-    <>
+    <HomePageContainer>
       <div className="app">
         {helmet}
         {header}
         <ZipCodeForm />
-        {zipCodeList}
+        <ZipCodeList />
       </div>
-    </>
+    </HomePageContainer>
   );
 }

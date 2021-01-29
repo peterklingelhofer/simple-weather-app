@@ -8,6 +8,9 @@ import {
   zipCodeValidation,
 } from '../../../store/actions/zipCodeForm';
 import { locationValidation } from '../../../utils/locationValidation';
+import { ThemeProvider } from '@material-ui/styles';
+import { darkTheme } from '../../../styles/theme';
+import { ZipCodeFormContainer } from './styled';
 
 const ZipCodeForm: React.FC = () => {
   const dispatch = useDispatch();
@@ -44,9 +47,11 @@ const ZipCodeForm: React.FC = () => {
   );
 
   const zipCodeAddButton = (
-    <Button type="submit" onClick={handleSubmit}>
-      Add
-    </Button>
+    <ThemeProvider theme={darkTheme}>
+      <Button type="submit" onClick={handleSubmit}>
+        Add
+      </Button>
+    </ThemeProvider>
   );
 
   useEffect(() => {
@@ -54,11 +59,14 @@ const ZipCodeForm: React.FC = () => {
   }, [formInput, dispatch]);
 
   return (
-    <div className="zipCodeSubmit">
-      {zipCodeSubmitForm}
-      <ZipCodeValidation />
-      {zipCodeAddButton}
-    </div>
+    <ZipCodeFormContainer>
+      <div className="zipCodeSubmit">
+        {zipCodeSubmitForm}
+        <ZipCodeValidation />
+        {zipCodeAddButton}
+      </div>
+      <div className="formSpacerBottom" />
+    </ZipCodeFormContainer>
   );
 };
 
