@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 const ZipCodeValidation: React.FC = () => {
-  const { zipCodeValidationStatus, showZipCodeValidation } = useSelector(
+  const { zipCodeValidationStatus } = useSelector(
     (state: any) => state.zipCodeForm,
   );
 
@@ -29,7 +29,7 @@ const ZipCodeValidation: React.FC = () => {
       zipCodeValidation = <></>;
   }
 
-  return <>{showZipCodeValidation && zipCodeValidation}</>;
+  return <>{zipCodeValidation}</>;
 };
 
 export default ZipCodeValidation;

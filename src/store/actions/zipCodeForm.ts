@@ -10,9 +10,3 @@ export function zipCodeValidation(payload: string) {
     payload,
   };
 }
-export function showValidation(payload: boolean) {
-  return {
-    type: 'UPDATE_VALIDATION_VISIBILITY',
-    payload,
-  };
-}

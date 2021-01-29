@@ -6,9 +6,8 @@ import { addZipCode } from '../../../store/actions/zipCodes';
 import {
   userInput,
   zipCodeValidation,
-  showValidation,
 } from '../../../store/actions/zipCodeForm';
-import { fetchZipCodeValidation } from '../../../api/openWeatherMap';
+import { locationValidation } from '../../../utils/locationValidation';
 
 const ZipCodeForm: React.FC = () => {
   const dispatch = useDispatch();
@@ -16,26 +15,11 @@ const ZipCodeForm: React.FC = () => {
   const { formInput } = useSelector((state: any) => state.zipCodeForm);
 
   const handleSubmit = async (event: FormEvent) => {
-    const regexp = /^[0-9]{5}(?:-[0-9]{4})?$/;
     event.preventDefault();
     if (!formInput) return;
-    dispatch(showValidation(true));
-    if (
-      zipCodes.findIndex(
-        (location: { text: string }) => location.text === formInput,
-      ) >= 0
-    ) {
-      dispatch(zipCodeValidation('duplicate'));
-    } else if (!regexp.test(formInput)) {
-      dispatch(zipCodeValidation('invalid'));
-    } else {
-      if (await fetchZipCodeValidation(formInput)) {
-        dispatch(zipCodeValidation('valid'));
-      } else {
-        dispatch(zipCodeValidation('invalid'));
-      }
-      dispatch(addZipCode(formInput));
-    }
+    const validation = await locationValidation(formInput, zipCodes);
+    dispatch(zipCodeValidation(validation));
+    if (validation === 'valid') dispatch(addZipCode(formInput));
     Array.from(document.querySelectorAll('input')).forEach(
       input => (input.value = ''),
     );
@@ -66,9 +50,7 @@ const ZipCodeForm: React.FC = () => {
   );
 
   useEffect(() => {
-    formInput &&
-      dispatch(showValidation(false)) &&
-      dispatch(zipCodeValidation(''));
+    formInput && dispatch(zipCodeValidation(''));
   }, [formInput, dispatch]);
 
   return (
