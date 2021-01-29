@@ -4,16 +4,16 @@ const openWeatherMapAPI = 'https://api.openweathermap.org/data/2.5';
 // Zip Code Validation
 export async function fetchZipCodeValidation(
   zip: string | number,
-  setFormValidationSuccess: Function,
+  setZipCodeValidationStatus: Function,
   setShowValidation: Function,
 ) {
   const url = `${openWeatherMapAPI}/weather?zip=${zip}&appid=${process.env.REACT_APP_OPEN_WEATHER_MAP_API_KEY}`;
   const response = await fetch(url);
   if (response.ok) {
-    setFormValidationSuccess(true);
+    setZipCodeValidationStatus('valid');
     setShowValidation(true);
   } else {
-    setFormValidationSuccess(false);
+    setZipCodeValidationStatus('invalid');
     setShowValidation(true);
   }
 }

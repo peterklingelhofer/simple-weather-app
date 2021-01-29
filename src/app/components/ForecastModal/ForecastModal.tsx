@@ -6,6 +6,11 @@ import { ForecastModalProps } from './types';
 
 const ForecastModal: React.FC<ForecastModalProps> = props => {
   const { toggleModal, isOpen, weatherHeader } = props;
+  const modalCloseButton = (
+    <Button className="modalButton" onClick={toggleModal}>
+      Close
+    </Button>
+  );
 
   return (
     <Modal
@@ -14,9 +19,7 @@ const ForecastModal: React.FC<ForecastModalProps> = props => {
       contentLabel="Forecast Modal"
       ariaHideApp={false}
     >
-      <Button className="modalButton" onClick={toggleModal}>
-        Close
-      </Button>
+      {modalCloseButton}
       <h1>{weatherHeader}</h1>
       <ForecastTable />
     </Modal>

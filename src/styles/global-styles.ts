@@ -74,14 +74,17 @@ export const GlobalStyle = createGlobalStyle`
     border-radius: 5px;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.15);
   }
-  .redText {
-    color: #C21818;
-  }
   .center {
     margin: auto;
   }
+  .redText {
+    color: #C21818;
+  }
   .greenText {
     color: #5E9E9D;
+  }
+  .blueText {
+    color: #345BD2;
   }
   .whiteText {
     color: #fff;
