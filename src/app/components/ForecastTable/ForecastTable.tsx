@@ -9,7 +9,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { kelvinToFahrenheit } from '../../../utils/temperatureConversion';
-import { Forecast } from './types';
+import { Forecast } from '../../../shared/interfaces/forecast';
 
 const useStyles = makeStyles({
   table: {
@@ -19,10 +19,8 @@ const useStyles = makeStyles({
 
 export default function ForecastTable() {
   const classes = useStyles();
-
   const forecast = useSelector((state: any) => state.weather);
-
-  const forecastTableBody = forecast[0].hourly.map((row: Forecast) => {
+  const forecastTableBody = forecast.map((row: Forecast) => {
     const {
       dt,
       temp,
