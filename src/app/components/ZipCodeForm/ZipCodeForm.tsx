@@ -22,16 +22,16 @@ const ZipCodeForm: React.FC = () => {
     ) {
       setShowValidation(true);
       setZipCodeValidationStatus('duplicate');
-    } else if (regexp.test(zipCodeText)) {
+    } else if (!regexp.test(zipCodeText)) {
+      setZipCodeValidationStatus('invalid');
+      setShowValidation(true);
+    } else {
       await fetchZipCodeValidation(
         zipCodeText,
         setZipCodeValidationStatus,
         setShowValidation,
       );
       dispatch(addZipCode(zipCodeText));
-    } else {
-      setZipCodeValidationStatus('invalid');
-      setShowValidation(true);
     }
     Array.from(document.querySelectorAll('input')).forEach(
       input => (input.value = ''),
@@ -55,28 +55,24 @@ const ZipCodeForm: React.FC = () => {
     </form>
   );
 
-  const zipCodeDuplicate = showValidation && (
-    <div className="blueText center">Duplicate zip code entered.</div>
-  );
-
-  const zipCodeInvalid = showValidation && (
-    <div className="redText center">Please provide a valid U.S. zip code.</div>
-  );
-
-  const zipCodeValid = showValidation && (
-    <div className="greenText center">Valid zip code provided.</div>
-  );
-
-  let zipCodeValidation: {} | null | undefined;
+  let zipCodeValidation: JSX.Element;
   switch (zipCodeValidationStatus) {
     case 'valid':
-      zipCodeValidation = zipCodeValid;
+      zipCodeValidation = (
+        <div className="greenText center">Valid zip code provided.</div>
+      );
       break;
     case 'invalid':
-      zipCodeValidation = zipCodeInvalid;
+      zipCodeValidation = (
+        <div className="redText center">
+          Please provide a valid U.S. zip code.
+        </div>
+      );
       break;
     case 'duplicate':
-      zipCodeValidation = zipCodeDuplicate;
+      zipCodeValidation = (
+        <div className="blueText center">Duplicate zip code entered.</div>
+      );
       break;
     default:
       zipCodeValidation = <></>;
@@ -95,7 +91,7 @@ const ZipCodeForm: React.FC = () => {
   return (
     <div className="zipCodeSubmit">
       {zipCodeSubmitForm}
-      {zipCodeValidation}
+      {showValidation && zipCodeValidation}
       {zipCodeAddButton}
     </div>
   );
