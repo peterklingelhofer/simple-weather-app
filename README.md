@@ -90,11 +90,12 @@ yarn start
 
 ## 🔖 Environment Variables
 
-Retrieve an API key from [OpenWeatherMap](https://openweathermap.org/ 'OpenWeatherMap').
+Retrieve an API key from [OpenWeatherMap](https://openweathermap.org/ 'Open Weather Map') and [Google Maps Platform](https://developers.google.com/maps/documentation/javascript/geocoding 'Google Maps Platform')
 After you got your API key, create a **.env** file in outermost/root directory, copy the line below to the file and replace YOUR_KEY with your OpenWeatherMap API Key.
 
 ```
 REACT_APP_OPEN_WEATHER_MAP_API_KEY=YOUR_KEY
+REACT_APP_GOOGLE_MAPS_API_KEY=YOUR_KEY
 ```
 
 ## 📚 Contributing
