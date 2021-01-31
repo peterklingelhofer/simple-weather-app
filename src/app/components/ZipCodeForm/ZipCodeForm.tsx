@@ -11,16 +11,12 @@ import { locationValidation } from '../../../helpers/locationValidation';
 import { ThemeProvider } from '@material-ui/styles';
 import { darkTheme } from '../../../styles/theme';
 import { ZipCodeFormContainer } from './styled';
-import { ZipCodeFormInterface } from '../../../shared/interfaces/zipCodeForm';
-import { ZipCodesInterface } from '../../../shared/interfaces/zipCodes';
+import { RootStateInterface } from '../../../shared/interfaces/rootState';
 
 const ZipCodeForm: React.FC = () => {
   const dispatch = useDispatch();
   const { zipCodes, zipCodeForm } = useSelector(
-    (state: {
-      zipCodes: ZipCodesInterface[];
-      zipCodeForm: ZipCodeFormInterface;
-    }) => state,
+    (state: RootStateInterface) => state,
   );
   const { formInput, zipCodeValidationStatus } = zipCodeForm;
 

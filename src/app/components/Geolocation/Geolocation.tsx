@@ -9,7 +9,7 @@ const Geolocation: React.FC = () => {
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(position => {
       (async function () {
-        const zip: string = await geolocation(position);
+        const zip: string | undefined = await geolocation(position);
         dispatch(addZipCode(zip));
       })();
     });

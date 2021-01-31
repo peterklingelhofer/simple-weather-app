@@ -1,3 +1,4 @@
+import GeolocationInterface from './shared/apiInterfaces';
 const googleMapsAPI = 'https://maps.googleapis.com/maps/api/geocode';
 
 // Get user's Zip Code
@@ -11,7 +12,8 @@ export async function geolocation(position: {
       ${latitude},${longitude}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`;
     const response = await fetch(url);
     if (response.ok) {
-      const { results } = await response.json();
+      const res: GeolocationInterface = await response.json();
+      const { results } = res;
       if (results[0].address_components[7].long_name !== undefined) {
         const zip = results[0].address_components[7].long_name;
         return zip;
@@ -27,7 +29,8 @@ export async function fetchZipCodeValidation(zip: string) {
   const url = `${googleMapsAPI}/json?address=${zip}&sensor=true&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`;
   const response = await fetch(url);
   if (response.ok) {
-    const { results } = await response.json();
+    const res: GeolocationInterface = await response.json();
+    const { results } = res;
     const { address_components } = results[0];
     const index =
       address_components.findIndex(

@@ -1,4 +1,4 @@
-export function updateForecast(payload: object) {
+export function updateForecast(payload: object | undefined) {
   return {
     type: 'UPDATE_FORECAST',
     payload,

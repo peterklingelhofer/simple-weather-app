@@ -1,9 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { RootStateInterface } from '../../../shared/interfaces/rootState';
 
 const ZipCodeValidation: React.FC = () => {
   const { zipCodeValidationStatus } = useSelector(
-    (state: any) => state.zipCodeForm,
+    (state: RootStateInterface) => state.zipCodeForm,
   );
 
   let zipCodeValidation: JSX.Element;
