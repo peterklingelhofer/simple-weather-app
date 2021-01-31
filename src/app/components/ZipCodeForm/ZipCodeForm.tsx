@@ -7,15 +7,22 @@ import {
   userInput,
   zipCodeValidation,
 } from '../../../store/actions/zipCodeForm';
-import { locationValidation } from '../../../utils/locationValidation';
+import { locationValidation } from '../../../helpers/locationValidation';
 import { ThemeProvider } from '@material-ui/styles';
 import { darkTheme } from '../../../styles/theme';
 import { ZipCodeFormContainer } from './styled';
+import { ZipCodeFormInterface } from '../../../shared/interfaces/zipCodeForm';
+import { ZipCodesInterface } from '../../../shared/interfaces/zipCodes';
 
 const ZipCodeForm: React.FC = () => {
   const dispatch = useDispatch();
-  const zipCodes = useSelector((state: any) => state.zipCodes);
-  const { formInput } = useSelector((state: any) => state.zipCodeForm);
+  const { zipCodes, zipCodeForm } = useSelector(
+    (state: {
+      zipCodes: ZipCodesInterface[];
+      zipCodeForm: ZipCodeFormInterface;
+    }) => state,
+  );
+  const { formInput } = zipCodeForm;
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();

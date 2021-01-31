@@ -1,4 +1,4 @@
-export interface Forecast {
+export interface WeatherInterface {
   index: number;
   dt: number;
   temp: number;
