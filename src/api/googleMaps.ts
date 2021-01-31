@@ -29,7 +29,6 @@ export async function fetchZipCodeValidation(zip: string) {
   if (response.ok) {
     const { results } = await response.json();
     const { address_components } = results[0];
-    console.table(address_components);
     const index =
       address_components.findIndex(
         (component: { long_name: string; short_name: string }) => {
