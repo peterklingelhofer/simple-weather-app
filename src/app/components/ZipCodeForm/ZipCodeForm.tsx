@@ -8,7 +8,6 @@ import {
   zipCodeValidation,
 } from '../../../store/actions/zipCodeForm';
 import { locationValidation } from '../../../helpers/locationValidation';
-import { showPosition } from '../../../api/googleGeolocation';
 import { ThemeProvider } from '@material-ui/styles';
 import { darkTheme } from '../../../styles/theme';
 import { ZipCodeFormContainer } from './styled';
@@ -25,20 +24,18 @@ const ZipCodeForm: React.FC = () => {
   );
   const { formInput, zipCodeValidationStatus } = zipCodeForm;
 
+  const handleInputChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    const { target } = event;
+    const { value } = target;
+    dispatch(userInput(value));
+  };
+
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     if (!formInput) return;
     const validation = await locationValidation(formInput, zipCodes);
     dispatch(zipCodeValidation(validation));
-    // Prevent validation status from being cleared if another action has been performed by user in last six seconds
-    (function () {
-      let tempZipCodeValidationStatus = zipCodeValidationStatus;
-      setTimeout(function () {
-        tempZipCodeValidationStatus === zipCodeValidationStatus
-          ? dispatch(zipCodeValidation(''))
-          : (tempZipCodeValidationStatus = zipCodeValidationStatus);
-      }, 6000);
-    })();
+    validationStatusReset();
     if (validation === 'valid') dispatch(addZipCode(formInput));
     Array.from(document.querySelectorAll('input')).forEach(
       input => (input.value = ''),
@@ -46,10 +43,14 @@ const ZipCodeForm: React.FC = () => {
     dispatch(userInput(''));
   };
 
-  const handleInputChange = async (event: ChangeEvent<HTMLInputElement>) => {
-    const { target } = event;
-    const { value } = target;
-    dispatch(userInput(value));
+  // Prevent validation status from being cleared if another action has been performed by user in last six seconds
+  const validationStatusReset = () => {
+    let tempZipCodeValidationStatus = zipCodeValidationStatus;
+    setTimeout(() => {
+      tempZipCodeValidationStatus === zipCodeValidationStatus
+        ? dispatch(zipCodeValidation(''))
+        : (tempZipCodeValidationStatus = zipCodeValidationStatus);
+    }, 6000);
   };
 
   const zipCodeSubmitForm = (
@@ -74,15 +75,6 @@ const ZipCodeForm: React.FC = () => {
   useEffect(() => {
     formInput && dispatch(zipCodeValidation(''));
   }, [formInput, dispatch]);
-
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(position => {
-      (async function () {
-        const zip: string = await showPosition(position);
-        dispatch(addZipCode(zip));
-      })();
-    });
-  }, [dispatch]);
 
   return (
     <ZipCodeFormContainer>
