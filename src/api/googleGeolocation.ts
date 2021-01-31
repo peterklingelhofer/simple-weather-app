@@ -1,8 +1,7 @@
-export async function showPosition(position: {
+export async function geolocation(position: {
   coords: { latitude: number; longitude: number };
 }) {
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
     const { coords } = position;
     const { latitude, longitude } = coords;
     const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=
