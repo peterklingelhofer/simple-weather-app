@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 import ZipCode from './../ZipCode/ZipCode';
-import { ZipCodeProps } from './types';
 import { ZipCodeListContainer } from './styled';
+import { RootStateInterface } from '../../../shared/interfaces/rootState';
 
 const ZipCodeList: React.FC = () => {
-  const zipCodes = useSelector((state: any) => state.zipCodes);
+  const zipCodes = useSelector((state: RootStateInterface) => state.zipCodes);
   const zipCodeList = (
     <div className="zipCodeList">
-      {zipCodes?.map((zipCode: ZipCodeProps) => (
+      {zipCodes?.map(zipCode => (
         <ZipCode key={zipCode.id} id={zipCode.id} text={zipCode.text} />
       ))}
     </div>

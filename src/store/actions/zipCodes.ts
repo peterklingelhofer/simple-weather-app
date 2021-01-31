@@ -1,4 +1,4 @@
-export function addZipCode(text: string) {
+export function addZipCode(text: string | undefined) {
   return {
     type: 'ADD_ZIPCODE',
     text,

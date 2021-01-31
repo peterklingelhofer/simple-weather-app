@@ -3,7 +3,7 @@ const regexp = /^[0-9]{5}(?:-[0-9]{4})?$/;
 
 export async function locationValidation(
   formInput: string,
-  zipCodes: Array<{ id: number; text: string }>,
+  zipCodes: { id: number; text: string }[],
 ) {
   if (
     zipCodes.findIndex(

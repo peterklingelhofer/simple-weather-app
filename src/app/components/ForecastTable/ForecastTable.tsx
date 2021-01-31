@@ -12,13 +12,14 @@ import {
 } from '@material-ui/core';
 import { kelvinToFahrenheit } from '../../../utils/temperatureConversion';
 import { WeatherInterface } from '../../../shared/interfaces/weather';
+import { RootStateInterface } from '../../../shared/interfaces/rootState';
 import { darkTheme } from '../../../styles/theme';
 import { tableStyles } from './styles';
 
 export default function ForecastTable() {
   const classes = tableStyles();
   const { table } = classes;
-  const forecast = useSelector((state: any) => state.weather);
+  const forecast = useSelector((state: RootStateInterface) => state.weather);
 
   const forecastTableHead = (
     <TableHead>
