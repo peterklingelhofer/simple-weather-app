@@ -8,6 +8,7 @@ import {
   zipCodeValidation,
 } from '../../../store/actions/zipCodeForm';
 import { locationValidation } from '../../../helpers/locationValidation';
+import { showPosition } from '../../../api/googleGeolocation';
 import { ThemeProvider } from '@material-ui/styles';
 import { darkTheme } from '../../../styles/theme';
 import { ZipCodeFormContainer } from './styled';
@@ -22,14 +23,22 @@ const ZipCodeForm: React.FC = () => {
       zipCodeForm: ZipCodeFormInterface;
     }) => state,
   );
-  const { formInput } = zipCodeForm;
+  const { formInput, zipCodeValidationStatus } = zipCodeForm;
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     if (!formInput) return;
     const validation = await locationValidation(formInput, zipCodes);
     dispatch(zipCodeValidation(validation));
-    setTimeout(() => dispatch(zipCodeValidation('')), 6000);
+    // Prevent validation status from being cleared if another action has been performed by user in last six seconds
+    (function () {
+      let tempZipCodeValidationStatus = zipCodeValidationStatus;
+      setTimeout(function () {
+        tempZipCodeValidationStatus === zipCodeValidationStatus
+          ? dispatch(zipCodeValidation(''))
+          : (tempZipCodeValidationStatus = zipCodeValidationStatus);
+      }, 6000);
+    })();
     if (validation === 'valid') dispatch(addZipCode(formInput));
     Array.from(document.querySelectorAll('input')).forEach(
       input => (input.value = ''),
@@ -65,6 +74,15 @@ const ZipCodeForm: React.FC = () => {
   useEffect(() => {
     formInput && dispatch(zipCodeValidation(''));
   }, [formInput, dispatch]);
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(position => {
+      (async function () {
+        const zip: string = await showPosition(position);
+        dispatch(addZipCode(zip));
+      })();
+    });
+  }, [dispatch]);
 
   return (
     <ZipCodeFormContainer>
