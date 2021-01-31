@@ -1,20 +1,9 @@
 import { kelvinToFahrenheit } from '../utils/temperatureConversion';
 const openWeatherMapAPI = 'https://api.openweathermap.org/data/2.5';
 
-// Zip Code Validation
-export async function fetchZipCodeValidation(zip: string | number) {
-  const url = `${openWeatherMapAPI}/weather?zip=${zip}&appid=${process.env.REACT_APP_OPEN_WEATHER_MAP_API_KEY}`;
-  const response = await fetch(url);
-  if (response.ok) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
 // Get current weather conditions with Zip Code
 export async function fetchCurrentConditions(
-  zip: string | number,
+  zip: string,
   setApiValidZip: Function,
   setName: Function,
   setTemperature: Function,
