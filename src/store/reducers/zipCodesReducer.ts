@@ -1,4 +1,6 @@
-export default function zipCodes(state = [], action: any) {
+import { ZipCodesInterface } from '../../shared/interfaces/zipCodes';
+
+export default function zipCodes(state: ZipCodesInterface[] = [], action: any) {
   const { text, type } = action;
   switch (type) {
     case 'ADD_ZIPCODE':

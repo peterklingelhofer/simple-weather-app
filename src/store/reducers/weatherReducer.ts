@@ -1,7 +1,7 @@
 import { WeatherActionTypes } from '../actionTypes';
-import { Forecast } from '../../shared/interfaces/forecast';
+import { WeatherInterface } from '../../shared/interfaces/weather';
 
-const initialState: Forecast = {
+const initialState: WeatherInterface = {
   index: 0,
   dt: 0,
   temp: 0,
@@ -18,8 +18,8 @@ const initialState: Forecast = {
 };
 
 export default function weather(
-  state: Forecast = initialState,
-  action: { type: WeatherActionTypes; payload: Forecast },
+  state: WeatherInterface = initialState,
+  action: { type: WeatherActionTypes; payload: WeatherInterface },
 ) {
   const { payload, type } = action;
   switch (type) {

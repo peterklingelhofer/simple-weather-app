@@ -1,25 +1,23 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from '@material-ui/core';
 import { kelvinToFahrenheit } from '../../../utils/temperatureConversion';
-import { Forecast } from '../../../shared/interfaces/forecast';
+import { WeatherInterface } from '../../../shared/interfaces/weather';
 import { darkTheme } from '../../../styles/theme';
+import { tableStyles } from './styles';
 
-const tableStyles = makeStyles({
-  table: {
-    minWidth: 650,
-  },
-});
 export default function ForecastTable() {
   const classes = tableStyles();
+  const { table } = classes;
   const forecast = useSelector((state: any) => state.weather);
 
   const forecastTableHead = (
@@ -38,7 +36,7 @@ export default function ForecastTable() {
     </TableHead>
   );
 
-  const forecastTableBody = forecast.map((row: Forecast) => {
+  const forecastTableBody = forecast.map((row: WeatherInterface) => {
     const {
       dt,
       temp,
@@ -72,7 +70,8 @@ export default function ForecastTable() {
     <ThemeProvider theme={darkTheme}>
       <TableContainer component={Paper}>
         <Table
-          className={classes.table}
+          className={table}
+          stickyHeader
           aria-label="weather forecast data table"
         >
           {forecastTableHead}

@@ -10,10 +10,10 @@ import { Button } from '@material-ui/core';
 import ForecastModal from '../ForecastModal/ForecastModal';
 import { ThemeProvider } from '@material-ui/styles';
 import { darkTheme } from '../../../styles/theme';
-import { LocationProps } from './types';
+import { ZipCodesInterface } from '../../../shared/interfaces/zipCodes';
 import { ZipCodeContainer } from './styled';
 
-const ZipCode: React.FC<LocationProps> = props => {
+const ZipCode: React.FC<ZipCodesInterface> = props => {
   const { text: zip } = props;
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);

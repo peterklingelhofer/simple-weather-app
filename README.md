@@ -84,8 +84,8 @@ Clone this repository, install dependencies, and start the local server.
 ```bash
 git clone https://github.com/peterklingelhofer/simple-weather-app.git
 cd simple-weather-app
-npm install
-npm start
+yarn install
+yarn start
 ```
 
 ## 🔖 Environment Variables

@@ -1,17 +1,13 @@
 import { ZipCodeFormActionTypes } from '../actionTypes';
+import { ZipCodeFormInterface } from '../../shared/interfaces/zipCodeForm';
 
-export interface ZipCodeFormState {
-  formInput: string;
-  zipCodeValidationStatus: string;
-}
-
-const initialState: ZipCodeFormState = {
+const initialState: ZipCodeFormInterface = {
   formInput: '',
   zipCodeValidationStatus: '',
 };
 
 export default function zipCodeFormReducer(
-  state: ZipCodeFormState = initialState,
+  state: ZipCodeFormInterface = initialState,
   action: { type: ZipCodeFormActionTypes; payload: string },
 ) {
   const { type, payload } = action;
