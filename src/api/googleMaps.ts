@@ -32,13 +32,20 @@ export async function fetchZipCodeValidation(zip: string) {
     const res: GeolocationInterface = await response.json();
     const { results } = res;
     const { address_components } = results[0];
-    const index =
+    const validate =
       address_components.findIndex(
-        (component: { long_name: string; short_name: string }) => {
-          const { long_name, short_name } = component;
-          return zip === long_name || zip === short_name;
+        (component: {
+          long_name: string;
+          short_name: string;
+          types: string[];
+        }) => {
+          const { long_name, short_name, types } = component;
+          return (
+            (zip === long_name || zip === short_name) &&
+            types[0] === 'postal_code'
+          );
         },
       ) > -1;
-    return index;
+    return validate;
   }
 }

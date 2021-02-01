@@ -1,5 +1,5 @@
 import { kelvinToFahrenheit } from '../utils/temperatureConversion';
-import WeatherForecastInterface from './shared/apiInterfaces';
+import { WeatherInterface } from '../shared/interfaces/weather';
 import WeatherCurrentInterface from './shared/apiInterfaces';
 const openWeatherMapAPI = 'https://api.openweathermap.org/data/2.5';
 
@@ -32,7 +32,7 @@ export async function fetchForecast(lat: number, lng: number) {
   const url = `${openWeatherMapAPI}/onecall?lat=${lat}&lon=${lng}&appid=${process.env.REACT_APP_OPEN_WEATHER_MAP_API_KEY}`;
   const response = await fetch(url);
   if (response.ok) {
-    const result: WeatherForecastInterface = await response.json();
+    const result: { hourly: WeatherInterface } = await response.json();
     const { hourly } = result;
     return hourly;
   } else {
