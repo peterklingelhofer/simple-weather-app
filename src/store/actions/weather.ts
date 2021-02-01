@@ -4,3 +4,8 @@ export function updateForecast(payload: object | undefined) {
     payload,
   };
 }
+export function resetForecast() {
+  return {
+    type: 'INITIAL_STATE',
+  };
+}

@@ -8,4 +8,5 @@ export enum ZipCodeActionTypes {
 }
 export enum WeatherActionTypes {
   UPDATE_FORECAST = 'UPDATE_FORECAST',
+  INITIAL_STATE = 'INITIAL_STATE',
 }

@@ -22,6 +22,8 @@ export default function ForecastTable() {
   const { table } = classes;
   const forecast = useSelector((state: RootStateInterface) => state.weather);
 
+  if (forecast[0].index === 0) return <></>;
+
   const forecastTableHead = (
     <TableHead>
       <TableRow>
