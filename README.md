@@ -121,7 +121,7 @@ Commit messages should be written in present tense describing what the committed
 ## 📖 References
 
 - [OpenWeatherMap](https://openweathermap.org/ 'OpenWeatherMap')
-- [Google Maps Platform: Geocoding](https://developers.google.com/maps/documentation/javascript/geocoding 'Google Maps Platform: Geocoding')
+- [Google Geocoding API](https://developers.google.com/maps/documentation/javascript/geocoding 'Google Geocoding API')
 
 ## 📑 License
 
