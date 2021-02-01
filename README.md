@@ -90,8 +90,8 @@ yarn start
 
 ## 🔖 Environment Variables
 
-Retrieve an API key from [OpenWeatherMap](https://openweathermap.org/ 'Open Weather Map') and [Google Maps Platform](https://developers.google.com/maps/documentation/javascript/geocoding 'Google Maps Platform')
-After you got your API key, create a **.env** file in outermost/root directory, copy the line below to the file and replace YOUR_KEY with your OpenWeatherMap API Key.
+Retrieve an API key from [OpenWeatherMap](https://openweathermap.org/ 'Open Weather Map') and [Google Geocoding API](https://developers.google.com/maps/documentation/javascript/geocoding 'Google Geocoding API')
+After you got your API key, create a **.env** file in outermost/root directory, copy the line below to the file and replace YOUR_KEY with your Open Weather Map and Google Geocoding API keys.
 
 ```
 REACT_APP_OPEN_WEATHER_MAP_API_KEY=YOUR_KEY
@@ -120,8 +120,8 @@ Commit messages should be written in present tense describing what the committed
 
 ## 📖 References
 
-[OpenWeatherMap](https://openweathermap.org/ 'OpenWeatherMap')
-[Google Maps Platform: Geocoding](https://developers.google.com/maps/documentation/javascript/geocoding 'Google Maps Platform: Geocoding')
+- [OpenWeatherMap](https://openweathermap.org/ 'OpenWeatherMap')
+- [Google Maps Platform: Geocoding](https://developers.google.com/maps/documentation/javascript/geocoding 'Google Maps Platform: Geocoding')
 
 ## 📑 License
 
