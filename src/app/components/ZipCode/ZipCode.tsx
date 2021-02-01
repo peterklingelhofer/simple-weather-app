@@ -8,6 +8,7 @@ import {
 } from '../../../api/openWeatherMap';
 import { Button } from '@material-ui/core';
 import ForecastModal from '../ForecastModal/ForecastModal';
+import WeatherConditionsIcon from '../WeatherConditionsIcon/WeatherConditionsIcon';
 import { ThemeProvider } from '@material-ui/styles';
 import { darkTheme } from '../../../styles/theme';
 import { ZipCodesInterface } from '../../../shared/interfaces/zipCodes';
@@ -61,14 +62,13 @@ const ZipCode: React.FC<ZipCodesInterface> = props => {
 
   const weatherHeader = (
     <div className="clickable whiteText" onClick={toggleModal}>
-      <span role="img" aria-label="pin">
-        📍
-      </span>
-      {zip}, {name}&nbsp;
+      <WeatherConditionsIcon conditions={currentConditions} />
+      &nbsp;&nbsp;{zip},&nbsp;{name}&nbsp;
       <span role="img" aria-label="thermometer">
         🌡
       </span>
-      {temperature}&deg;F, {currentConditions}
+      {temperature}&deg;F,&nbsp;
+      <span className="capitalize">{currentConditions}</span>&nbsp;
     </div>
   );
   const forecastModal = (

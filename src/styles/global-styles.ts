@@ -22,6 +22,9 @@ export const GlobalStyle = createGlobalStyle`
     font-family: inherit;
     font-size: inherit;
   }
+  .capitalize {
+    text-transform: capitalize;
+  }
   .clickable {
     cursor: pointer;
   }
@@ -57,13 +60,13 @@ export const GlobalStyle = createGlobalStyle`
     overflow: hidden;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
   }
+  .floatRight {
+    float: right;
+  }
   .ReactModal__Content {
     background: #333333 !important;
   }
   .ReactModal__Overlay {
     background-color: rgba(33, 33, 33, 0.75) !important;
-  }
-  .modalButton {
-    float: right;
   }
 `;

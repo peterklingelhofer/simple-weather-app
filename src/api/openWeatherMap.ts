@@ -19,7 +19,7 @@ export async function fetchCurrentConditions(
     const result: WeatherCurrentInterface = await response.json();
     setName(result.name);
     setTemperature(kelvinToFahrenheit(result.main.temp));
-    setCurrentConditions(result.weather[0].main);
+    setCurrentConditions(result.weather[0].description);
     setLatitude(+result.coord.lat);
     setLongitude(+result.coord.lon);
   } else {

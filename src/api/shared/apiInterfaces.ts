@@ -1,7 +1,7 @@
 export default interface WeatherCurrentInterface {
   name: string;
   main: { temp: number };
-  weather: { main: string }[];
+  weather: { main: string; description: string }[];
   coord: { lat: number; lon: number };
 }
 
