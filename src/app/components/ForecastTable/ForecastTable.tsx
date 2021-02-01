@@ -10,6 +10,7 @@ import {
   TableRow,
   Paper,
 } from '@material-ui/core';
+import WeatherConditionsIcon from '../WeatherConditionsIcon/WeatherConditionsIcon';
 import { kelvinToFahrenheit } from '../../../utils/temperatureConversion';
 import { WeatherInterface } from '../../../shared/interfaces/weather';
 import { RootStateInterface } from '../../../shared/interfaces/rootState';
@@ -25,13 +26,13 @@ export default function ForecastTable() {
     <TableHead>
       <TableRow>
         <TableCell>Datetime</TableCell>
+        <TableCell align="right">Conditions</TableCell>
         <TableCell align="right">Temperature</TableCell>
         <TableCell align="right">Humidity</TableCell>
         <TableCell align="right">Pressure</TableCell>
         <TableCell align="right">Clouds</TableCell>
         <TableCell align="right">Wind speed</TableCell>
         <TableCell align="right">Wind degree</TableCell>
-        <TableCell align="right">Weather</TableCell>
         <TableCell align="right">Description</TableCell>
       </TableRow>
     </TableHead>
@@ -54,14 +55,18 @@ export default function ForecastTable() {
           <TableCell component="th" scope="row">
             {new Date(dt * 1000).toString()}
           </TableCell>
+          <TableCell align="right">
+            <WeatherConditionsIcon conditions={weather[0].description} />
+          </TableCell>
           <TableCell align="right">{kelvinToFahrenheit(temp)}&deg;F</TableCell>
           <TableCell align="right">{humidity}%</TableCell>
           <TableCell align="right">{pressure} atm</TableCell>
           <TableCell align="right">{clouds}%</TableCell>
           <TableCell align="right">{windSpeed} m/s</TableCell>
           <TableCell align="right">{windDegree}&deg;</TableCell>
-          <TableCell align="right">{weather[0].main}</TableCell>
-          <TableCell align="right">{weather[0].description}</TableCell>
+          <TableCell align="right">
+            <span className="capitalize">{weather[0].description}</span>
+          </TableCell>
         </TableRow>
       </TableBody>
     );

@@ -10,7 +10,7 @@ const ForecastModal: React.FC<ForecastModalProps> = props => {
   const { toggleModal, isOpen, weatherHeader } = props;
   const modalCloseButton = (
     <ThemeProvider theme={darkTheme}>
-      <Button className="modalButton" onClick={toggleModal}>
+      <Button className="floatRight" onClick={toggleModal}>
         Close
       </Button>
     </ThemeProvider>
