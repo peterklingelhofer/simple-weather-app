@@ -4,9 +4,9 @@ import { Button } from '@material-ui/core';
 import ForecastTable from '../ForecastTable/ForecastTable';
 import { ThemeProvider } from '@material-ui/styles';
 import { darkTheme } from '../../../styles/theme';
-import { ForecastModalProps } from './types';
+import { ForecastModalInterface } from './types';
 
-const ForecastModal: React.FC<ForecastModalProps> = props => {
+const ForecastModal: React.FC<ForecastModalInterface> = props => {
   const { toggleModal, isOpen, weatherHeader } = props;
   const modalCloseButton = (
     <ThemeProvider theme={darkTheme}>
