@@ -18,13 +18,15 @@ const initialState: WeatherInterface = {
 };
 
 export default function weather(
-  state: WeatherInterface = initialState,
+  state: WeatherInterface[] = [initialState],
   action: { type: WeatherActionTypes; payload: WeatherInterface },
 ) {
   const { payload, type } = action;
   switch (type) {
     case 'UPDATE_FORECAST':
       return payload;
+    case 'INITIAL_STATE':
+      return [initialState];
     default:
       return state;
   }

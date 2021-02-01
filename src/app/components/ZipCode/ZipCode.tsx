@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { removeZipCode } from '../../../store/actions/zipCodes';
-import { updateForecast } from '../../../store/actions/weather';
+import { updateForecast, resetForecast } from '../../../store/actions/weather';
 import {
   fetchCurrentConditions,
   fetchForecast,
@@ -26,6 +26,7 @@ const ZipCode: React.FC<ZipCodesInterface> = props => {
   const [longitude, setLongitude] = useState(0);
 
   async function getUpdatedForecast() {
+    dispatch(resetForecast());
     const result = await fetchForecast(latitude, longitude);
     dispatch(updateForecast(result));
   }
