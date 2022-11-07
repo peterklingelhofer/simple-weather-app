@@ -2,6 +2,8 @@
 
 A minimal, lightweight weather application.
 
+![](src/assets/simpleWeatherApp.png)
+
 ## 🌤 Description
 
 Welcome to Simple Weather App. This application provides users with current conditions and hourly forecast data, with the capacity to search by U.S. Zip Code. Users can add multiple locations to their list of stored places, to check on weather conditions for their favorite places. Additionally, users can optionally share their location and have their current location automatically be added to the locations list.

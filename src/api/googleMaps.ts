@@ -11,15 +11,19 @@ export async function geolocation(position: {
     const url = `${googleMapsAPI}/json?latlng=
       ${latitude},${longitude}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`;
     const response = await fetch(url);
+    console.log(response);
     if (response.ok) {
       const res: GeolocationInterface = await response.json();
       const { results } = res;
-      if (results[0].address_components[7].long_name !== undefined) {
+      if (
+        !results[0] ||
+        results[0].address_components[7].long_name === undefined
+      ) {
+        return '';
+      } else {
         const zip = results[0].address_components[7].long_name;
         return zip;
       }
-    } else {
-      return '';
     }
   }
 }
@@ -28,9 +32,13 @@ export async function geolocation(position: {
 export async function fetchZipCodeValidation(zip: string) {
   const url = `${googleMapsAPI}/json?address=${zip}&sensor=true&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`;
   const response = await fetch(url);
+  console.log(response);
   if (response.ok) {
     const res: GeolocationInterface = await response.json();
     const { results } = res;
+    if (!results[0]) {
+      return;
+    }
     const { address_components } = results[0];
     const validate =
       address_components.findIndex(

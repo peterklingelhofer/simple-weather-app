@@ -32,7 +32,7 @@ const ZipCodeForm: React.FC = () => {
     const validation = await locationValidation(formInput, zipCodes);
     dispatch(zipCodeValidation(validation));
     validationStatusReset();
-    if (validation === 'valid') dispatch(addZipCode(formInput));
+    dispatch(addZipCode(formInput));
     Array.from(document.querySelectorAll('input')).forEach(
       input => (input.value = ''),
     );
